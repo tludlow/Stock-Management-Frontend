@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 
 /**
  * Encapsulating function for all the pages which stores data that is required within the tree.
