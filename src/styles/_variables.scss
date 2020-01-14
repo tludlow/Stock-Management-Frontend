@@ -1,0 +1,16 @@
+//Default text color for normal text across the application
+$text-color: #1a1b1c;
+
+//Custom box shadow with vendored prefix.
+@mixin shadow($opacity) {
+    -webkit-box-shadow: 3px 3px 5px 0px rgba(0,0,0,$opacity);
+    -moz-box-shadow: 3px 3px 5px 0px rgba(0,0,0,$opacity);
+    box-shadow: 3px 3px 5px 0px rgba(0,0,0,$opacity);
+}
+
+//Custom text shadow with vendored prefixes.
+@mixin text-shadow($opacity) {
+    text-shadow: 2px 2px rgba(0, 0, 0, $opacity);
+    -webkit-text-shadow: 2px 2px rgba(0, 0, 0, $opacity);
+    -moz-text-shadow: 2px 2px rgba(0, 0, 0, $opacity);
+}

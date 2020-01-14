@@ -1,6 +1,6 @@
 
 # Group23-Frontend
-Frontend for the software engineering module
+Frontend for the software engineering module, the base template used for the frontend was from create-react-app and has been heavily modified to include redux.
 
 ### Installation
 You will need to download & install Node (Version: 12.14.1 is the one it's know to work for)
