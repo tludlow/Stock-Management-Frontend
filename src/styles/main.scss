@@ -8,16 +8,114 @@
 
 //General body styles, global to all pages.
 body {
-    font-family: "Open Sans", sans-serif;
+    font-family: "Inter", "Open Sans", sans-serif;
     -webkit-font-smoothing: subpixel-antialiased;
     backface-visibility: hidden; 
 
     margin: 0px;
     padding: 0px;
-    background-color: #F3F5F5;
+    background-color: #F8F7F8;
     color: $text-color;
     font-size: 16px;
     display: flex;
     flex-direction: column;
     vertical-align: middle;
 }
+
+.main {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.content > * {
+    padding-left: 24px;
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.nav {
+    width: 290px;
+    min-height: 100vh;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    @include shadow(0.03);
+
+    .logo {
+        @include shadow(0.03);
+        height: 65px;
+        background-color: $primary-color;
+        h1 {
+            margin: 0;
+            color: white;
+            text-align: center;
+            line-height: 65px;
+        }
+    }
+
+    .nav-items {
+        margin-top: 32px;
+        padding: 12px;
+        ul {
+            list-style: none;
+            padding-left: 64px;
+
+            li {
+                margin-bottom: 24px;
+                padding: 8px;
+                color: $primary-dimmed;
+                font-weight: 500;
+                line-height: 28px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                svg {
+                    padding-right: 8px;
+                }
+                &:active, &:hover {
+                    color: $primary-color;
+                    cursor: pointer;
+                    svg > g > circle {
+                        fill: $primary-color;
+                    }
+                }
+            }
+            li.active {
+                color: $primary-color;
+                svg > g > circle {
+                    fill: $primary-color;
+                }
+            }
+        }
+    }
+
+}
+
+.fourofour {
+    text-align: center;
+    padding-top: 200px;
+    font-size: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .button {
+        height: 32px;
+        border-radius: 4px;
+        background-color: $primary-color;
+        color: white;
+        width: 180px;
+        font-size: 24px;
+        line-height: 32px;
+
+        &:hover {
+            cursor: pointer;
+            @include shadow(0.1);
+        }
+    }
+}
+

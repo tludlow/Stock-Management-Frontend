@@ -10,6 +10,8 @@ import {Router, Route, IndexRoute} from 'react-router'
 import App from './containers/App.js';
 import Home from "./containers/Home/Home.js";
 
+import FourOFour from "./containers/FourOFour";
+
 //Load state and browser history so we can use it in react-router
 import store, {history} from './store';
 
@@ -20,7 +22,11 @@ render(
         <Router history={history}>
             <Route path="/" component={App}>
                 <IndexRoute component={Home} />
+
+                <Route path="/*" component={FourOFour} />
             </Route>
+
+            
         </Router>
     </Provider>,
 document.getElementById('root'));
