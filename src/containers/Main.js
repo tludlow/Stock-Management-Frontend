@@ -33,10 +33,8 @@ export default function Main(props) {
                 </div>
             </div>
             <div className="content">
-                <div className="page">
-                    {/* We use cloneElement here so we can auto pass down props to other components within the tree. */}
-                    {React.cloneElement(props.children, props)}
-                </div>
+                {/* We use cloneElement here so we can auto pass down props to other components within the tree. */}
+                {React.cloneElement(props.children, props)}
             </div>
         </div>
     );

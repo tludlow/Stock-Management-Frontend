@@ -1,0 +1,157 @@
+@import "../../styles/_variables.scss";
+
+
+
+@media screen and (max-width: 1024px) {
+
+    .top-bar {
+        padding: 12px;
+        margin-bottom: 20px;
+        .top-line {
+            display: flex;
+            flex-direction: row;
+            padding-left: 0;
+            line-height: 38px;
+            justify-content: space-between;
+            h4 {
+                color: $primary-color;
+                font-weight: bold;
+                font-size: 24px;
+                font-weight: bold;
+                margin: 0;
+                height: 20px;
+            }
+            p {
+                color: $primary-color;
+                font-size: 16px;
+                margin: 0;
+                align-self: flex-end;
+            }
+        }
+        p {
+            color: #879596;
+            font-size: 16px;
+            margin: 0;
+            
+        }
+    }
+
+    .action {
+        width: 80%;
+        background-color: white;
+        @include shadow(0.07);
+        border-radius: 4px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 12px;
+
+        display: flex;
+        flex-direction: row;
+
+        &:not(:first-child) {
+            margin-top: 20px;
+        }
+
+        .icon {
+            width: 20%;
+            i {
+                color: $primary-color;
+                font-size: 20px;
+            }
+        }
+
+        .text {
+            h3 {
+                margin: 0
+            }
+        }
+    }
+
+}
+
+@media screen and (min-width: 1024px) {
+    /* "Tablet and larger" styles here 
+    /* (mobile styles also apply, so just add changes for tablet) */
+}
+
+@media screen and (min-width: 1200px) {
+
+    .top-bar {
+        .top-line {
+            display: flex;
+            flex-direction: row;
+            padding-left: 0;
+            line-height: 38px;
+            h4 {
+                color: $primary-color;
+                font-weight: bold;
+                font-size: 24px;
+                font-weight: bold;
+            }
+            p {
+                color: $primary-color;
+                font-size: 16px;
+            }
+        }
+        p {
+            color: #879596;
+            font-size: 16px;
+            
+        }
+    }
+
+
+    .action-headers {
+        display: flex;
+        flex-direction: row;
+    
+        .action {
+            width: 240px;
+            height: 80px;
+            @include shadow(0.05);
+            padding: 14px;
+            background-color: white;
+            border-radius: 4px;
+            transition: ease-in-out .05s;
+    
+            display: flex;
+            flex-direction: row;
+    
+            .icon {
+                padding-right: 8px;
+                i {
+                    color: $primary-color;
+                    font-size: 20px;
+                }
+            }
+            .text {
+                p {
+                    color: #515151;
+                    font-size: 15px;
+                    margin-top: 6px;
+                }
+                h3 {
+                    font-weight: 500;
+                    font-size: 18px;
+                }
+            }
+            .text > * {
+                margin: 0;
+            }
+    
+            &:hover {
+                cursor: pointer;
+                @include shadow(0.15);
+                transition: ease-in-out .1s;
+            }
+        }
+        .action:not(:first-child)  {
+            margin-left: 79px;
+        }
+    }
+}
+
+
+
+
+
