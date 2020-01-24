@@ -9,7 +9,10 @@ import {Router, Route, IndexRoute} from 'react-router'
 //Page container imports
 import App from './containers/App.js';
 import Home from "./containers/Home/Home.js";
+
 import Trading from "./containers/Trading/Trading.js";
+//Trading forms, create, edit, delete
+import CreateTrade from "./containers/Trading/Forms/CreateTrade.js";
 
 import FourOFour from "./containers/FourOFour";
 
@@ -24,6 +27,7 @@ render(
             <Route path="/" component={App}>
                 <IndexRoute component={Home} />
                 <Route path="/trading" component={Trading} />
+                <Route path="/trading/create-trade" component={CreateTrade} />
 
                 <Route path="/*" component={FourOFour} />
             </Route>
