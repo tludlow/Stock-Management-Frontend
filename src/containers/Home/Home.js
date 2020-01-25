@@ -6,6 +6,11 @@ export default function Home() {
     });
 
     return (
-        <h3>Home</h3>
+        <>
+            <div className="px-4 md:px-0">
+                <h1 className="text-brand font-bold text-2xl">Home</h1> 
+                <p className="">Welcome to the Group 23 Derivative Trade Manager</p>
+            </div>
+        </>
     );
 }

@@ -12,7 +12,8 @@ export default function Trading() {
     return (
         <>
         <div className="px-4 md:px-0">
-            <h1 className="text-brand font-bold text-2xl">Trades &bull; <span className="text-gray-500 font-normal text-base uppercase tracking-tight">{date.getDate()} {months[date.getMonth()]} {date.getFullYear()}, {days[date.getDay()]} - {date.getHours()}:{date.getMinutes()}</span></h1>
+            <h1 className="text-brand font-bold text-2xl">Trades &bull; 
+            <span className="text-gray-500 font-normal text-base uppercase tracking-tight"> {date.getDate()} {months[date.getMonth()]} {date.getFullYear()}, {days[date.getDay()]} - {date.getHours()}:{String(date.getMinutes()).padStart(2, "0")}</span></h1>
             <p>View, manage and act on trade information</p>
         </div>
         
@@ -21,6 +22,7 @@ export default function Trading() {
             <Action title="Edit a Trade" message="Update a trade that already exists to it’s new values" linkTo="/trading/edit-trade" icon="edit" />
             <Action title="Delete a Trade" message="Delete an already existing trade from the system" linkTo="/trading/delete-trade" icon="delete" />
         </div>
+
         </>
     );
 }
