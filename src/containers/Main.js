@@ -4,10 +4,6 @@ import { Link } from "react-router";
 export default function Main(props) {
     const [isOpen, setIsOpen] = useState(false);
 
-    useEffect(()=> {
-        document.title = "Home - CS261 Group 23";
-    });
-
     return (
         <div className="main">
             <header className="bg-brand shadow-lg sm:flex sm:justify-between sm:items-center sm:px-20 lg:px-64 sm:py-3">

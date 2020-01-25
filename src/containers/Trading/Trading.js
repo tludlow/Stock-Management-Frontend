@@ -12,7 +12,7 @@ export default function Trading() {
     return (
         <>
         <div className="px-4 md:px-0">
-            <h1 className="text-brand font-bold text-xl">Trades &bull; <span className="text-gray-800 font-normal text-base">{date.getDate()} {months[date.getMonth()]} {date.getFullYear()}, {days[date.getDay()]}</span></h1>
+            <h1 className="text-brand font-bold text-2xl">Trades &bull; <span className="text-gray-500 font-normal text-base uppercase tracking-tight">{date.getDate()} {months[date.getMonth()]} {date.getFullYear()}, {days[date.getDay()]} - {date.getHours()}:{date.getMinutes()}</span></h1>
             <p>View, manage and act on trade information</p>
         </div>
         

@@ -1,8 +1,13 @@
 //Component representing the buttons which have CRUD operations for trades.
-import React from "react";
+import React, { useEffect } from "react";
 import { browserHistory } from "react-router";
 
 export default function Action(props) {
+
+    useEffect(()=> {
+        document.title = "Trading - CS261 Group 23";
+    });
+    
     return (
         <div className="bg-white w-11/12 md:w-2/5 md:mt-2 lg:mt-0 lg:w-3/12 mt-8 md:mt-0 px-4 py-4 justify-top flex shadow-md rounded-lg cursor-pointer hover:shadow-lg" onClick={()=> browserHistory.push(props.linkTo)}>
             <div className="icon mt-1">
@@ -12,7 +17,7 @@ export default function Action(props) {
             </div>
             <div className="text ml-4">
                 <h3 className="text-brand font-semibold text-lg">{props.title}</h3>
-                <p>{props.message} <svg className="inline-block fill-current text-gray-800 w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M18.59 13H3a1 1 0 0 1 0-2h15.59l-5.3-5.3a1 1 0 1 1 1.42-1.4l7 7a1 1 0 0 1 0 1.4l-7 7a1 1 0 0 1-1.42-1.4l5.3-5.3z"/></svg></p>
+                <p>{props.message} <svg className="inline-block fill-current text-gray-800 w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path className="heroicon-ui" d="M18.59 13H3a1 1 0 0 1 0-2h15.59l-5.3-5.3a1 1 0 1 1 1.42-1.4l7 7a1 1 0 0 1 0 1.4l-7 7a1 1 0 0 1-1.42-1.4l5.3-5.3z"/></svg></p>
             </div>
         </div>
     );
