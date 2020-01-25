@@ -14,6 +14,10 @@ import Trading from "./containers/Trading/Trading.js";
 //Trading forms, create, edit, delete
 import CreateTrade from "./containers/Trading/Forms/CreateTrade.js";
 
+
+//Reports page
+import Reports from "./containers/Reports/Reports.js";
+
 import FourOFour from "./containers/FourOFour";
 
 //Load state and browser history so we can use it in react-router
@@ -28,6 +32,8 @@ render(
                 <IndexRoute component={Home} />
                 <Route path="/trading" component={Trading} />
                 <Route path="/trading/create-trade" component={CreateTrade} />
+
+                <Route path="/reports" component={Reports} />
 
                 <Route path="/*" component={FourOFour} />
             </Route>
