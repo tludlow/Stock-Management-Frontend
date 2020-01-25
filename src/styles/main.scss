@@ -24,6 +24,8 @@ body {
     vertical-align: middle;
 }
 
+
+//Styling for auto suggesting inputs.
 .react-autosuggest__container {
     position: relative;
 }
@@ -95,6 +97,14 @@ body {
     background-color: #ddd;
 }
 
+
+
+//Corner ribbons for trade risk.
+.risk-ribbon {
+    transform: rotate(45deg);
+    top: -10px;
+    left: -4px;
+}
 
 
 
