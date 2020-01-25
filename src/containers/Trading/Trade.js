@@ -6,7 +6,7 @@ export default function Trade(props) {
     const [riskCategory, setRiskCategory] = useState("bg-gray-600");
 
     useEffect(()=> {
-        if (props.risk == 0) {
+        if (props.risk === 0) {
             setRiskCategory("bg-gray-600");
         } else if (props.risk > 0 && props.risk <= 33) {
             setRiskCategory("bg-green-700");

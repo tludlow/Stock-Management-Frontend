@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 //AutoSuggestion inputs
 import CompanyAutoSuggest from "./AutoSuggestions/CompanyAutoSuggest";
