@@ -3,8 +3,8 @@ import {render} from 'react-dom';
 import {Provider} from 'react-redux';
 import {Router, Route, IndexRoute} from 'react-router'
 
-/* Import CSS */
-//import css from './styles/main.scss';
+//CSS Import
+import './styles/tailwind.css';
 
 //Page container imports
 import App from './containers/App.js';
