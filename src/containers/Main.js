@@ -10,7 +10,7 @@ export default function Main(props) {
 
     return (
         <div className="main">
-            <header className="bg-brand shadow-lg sm:flex sm:justify-between sm:items-center sm:px-20 lg:px-32 sm:py-3">
+            <header className="bg-brand shadow-lg sm:flex sm:justify-between sm:items-center sm:px-20 lg:px-64 sm:py-3">
                 <div className="flex items-center justify-between px-4 py-3 sm:p-0">
                     <div>
                         <h1 className="text-white font-bold text-2xl"><span className="text-blue-500">Group</span> 23</h1>
@@ -25,13 +25,13 @@ export default function Main(props) {
                     </div>
                 </div>
                 <nav className={`${isOpen ? 'block' : 'hidden'} px-2 pt-2 pb-4 sm:flex sm:p-0`}>
-                <Link to="/" className="block px-3 py-2 text-white font-semibold rounded hover:bg-gray-800">Home</Link>
-                <Link to="/trading" className="mt-1 block px-3 py-2 text-white font-semibold rounded hover:bg-gray-800 sm:mt-0 sm:ml-6">Trading</Link>
-                <Link to="/reports" className="mt-1 block px-3 py-2 text-white font-semibold rounded hover:bg-gray-800 sm:mt-0 sm:ml-6">Reports</Link>
-                <Link to="/learning" className="mt-1 block px-3 py-2 text-white font-semibold rounded hover:bg-gray-800 sm:mt-0 sm:ml-6">Learning</Link>
+                <Link onClick={()=> setIsOpen(false)} to="/" className="block px-3 py-2 text-white font-semibold rounded hover:bg-gray-800">Home</Link>
+                <Link onClick={()=> setIsOpen(false)} to="/trading" className="mt-1 block px-3 py-2 text-white font-semibold rounded hover:bg-gray-800 sm:mt-0 sm:ml-6">Trading</Link>
+                <Link onClick={()=> setIsOpen(false)} to="/reports" className="mt-1 block px-3 py-2 text-white font-semibold rounded hover:bg-gray-800 sm:mt-0 sm:ml-6">Reports</Link>
+                <Link onClick={()=> setIsOpen(false)} to="/learning" className="mt-1 block px-3 py-2 text-white font-semibold rounded hover:bg-gray-800 sm:mt-0 sm:ml-6">Learning</Link>
                 </nav>
             </header>
-            <div className="content container mx-auto mt-6 flex justify-center md:justify-start">
+            <div className="content container mx-auto mt-6 flex flex-col align-center md:justify-start text-gray-800">
                 {/* We use cloneElement here so we can auto pass down props to other components within the tree. */}
                 {React.cloneElement(props.children, props)}
             </div>
