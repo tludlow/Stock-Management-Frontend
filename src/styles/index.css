@@ -1,0 +1,13 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+.bg-brand {
+    background-color: #3A456E;
+}
+
+.text-brand {
+    color: #3A456E;
+}
