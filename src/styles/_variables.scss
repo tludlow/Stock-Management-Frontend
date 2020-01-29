@@ -1,5 +1,7 @@
 //Default text color for normal text across the application
 $text-color: #1a1b1c;
+$primary-color: #3A456E;
+$primary-dimmed: #8F9BC1;
 
 //Custom box shadow with vendored prefix.
 @mixin shadow($opacity) {
