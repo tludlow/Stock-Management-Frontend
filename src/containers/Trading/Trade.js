@@ -18,7 +18,7 @@ export default function Trade(props) {
     });
 
     return (
-        <div className="w-11/12 lg:w-1/3 px-2 mt-4 overflow-hidden">
+        <div className="w-full lg:w-1/3 px-2 mt-4 overflow-hidden">
             <div className="relative bg-white shadow rounded-lg p-4 overflow-hidden">
             <div className={"absolute risk-ribbon w-4 h-8 " + riskCategory}></div>
             <div className="w-auto h-auto flex justify-between">

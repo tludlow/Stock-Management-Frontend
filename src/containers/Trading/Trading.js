@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router"
 
 //Components
 import Action from "./Action";
@@ -60,8 +61,10 @@ export default function Trading() {
     return (
         <>
         <div className="px-4 md:px-0">
-            <h1 className="text-brand font-bold text-2xl">Trades &bull; 
-            <span className="text-gray-500 font-normal text-base uppercase tracking-tight"> {date.getDate()} {months[date.getMonth()]} {date.getFullYear()}, {days[date.getDay()]} - {date.getHours()}:{String(date.getMinutes()).padStart(2, "0")}</span></h1>
+            <div className="flex items-center">
+                <h1 className="text-brand font-bold text-2xl">Trades &bull; 
+                <span className="ml-2 text-gray-500 font-normal text-base uppercase tracking-tight"> {date.getDate()} {months[date.getMonth()]} {date.getFullYear()}, {days[date.getDay()]} - {date.getHours()}:{String(date.getMinutes()).padStart(2, "0")}</span></h1>
+            </div>
             <p>View, manage and act on trade information</p>
         </div>
         
@@ -72,7 +75,11 @@ export default function Trading() {
         </div>
     
         <div className="trades mt-16 mx-4">
-            <h3 className="text-brand font-bold text-lg mb-4">Recent Trades</h3>
+            <div className="w-full flex justify-between items-baseline">
+                <h3 className="text-brand font-bold text-lg mb-1">Recent Trades</h3>
+                <Link to="/trading/all" className="text-gray-600 uppercase font-semibold leading-normal text-sm hover:text-gray-700 hover:font-extrabold cursor-pointer">View more</Link>
+            </div>
+            
             <div className="flex flex-wrap -mx-2 mb-8">
                 {trades.map((trade, i) => (
                     <Trade
