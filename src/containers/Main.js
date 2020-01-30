@@ -6,7 +6,7 @@ export default function Main(props) {
 
     return (
         <div className="main">
-            <header className="bg-brand shadow-lg sm:flex sm:justify-between sm:items-center sm:px-20 lg:px-64 sm:py-3">
+            <header className="bg-brand shadow-lg sm:flex sm:justify-between sm:items-center sm:px-20 sm:py-3">
                 <div className="flex items-center justify-between px-4 py-3 sm:p-0">
                     <div>
                         <h1 className="text-white font-bold text-2xl"><span className="text-blue-500">Group</span> 23</h1>
