@@ -129,6 +129,7 @@
     ]
   },
   "devDependencies": {
-    "tailwindcss": "^1.1.4"
+    "tailwindcss": "1.2.0",
+    "tailwindcss-spinner": "^1.0.0"
   }
 }

@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router"
+
+//API Import
+import api from "../../api";
 
 //Components
 import Action from "./Action";
@@ -58,6 +61,41 @@ let trades = [
 ]
 
 export default function Trading() {
+    const [loading, setLoading] = useState(false);
+
+    //trade/buyer=FORM54/
+    // useEffect(()=> {
+    //     //Get the trading data.
+    //     api.get("/trade/buyer/FORM54/").then((res)=> {
+    //         console.log(res);
+    //         setLoading(false);
+    //     }).catch((error)=> {
+    //         console.log(error);
+    //     });
+
+    // });
+
+    if (loading) {
+        return (
+            <>
+            <div className="px-4 md:px-0">
+                <div className="flex items-center">
+                    <h1 className="text-brand font-bold text-2xl">Trades &bull; 
+                    <span className="ml-2 text-gray-500 font-normal text-base uppercase tracking-tight"> {date.getDate()} {months[date.getMonth()]} {date.getFullYear()}, {days[date.getDay()]} - {date.getHours()}:{String(date.getMinutes()).padStart(2, "0")}</span></h1>
+                </div>
+                <p>View, manage and act on trade information</p>
+            </div>
+            
+            <div className="mt-6 flex flex-wrap justify-center md:justify-between w-auto">
+                <Action title="Create a Trade" message="Insert a new trade’s data into the system manually" linkTo="/trading/create-trade" icon="create" />
+                <Action title="Edit a Trade" message="Update a trade that already exists to it’s new values" linkTo="/trading/edit-trade" icon="edit" />
+                <Action title="Delete a Trade" message="Delete an already existing trade from the system" linkTo="/trading/delete-trade" icon="delete" />
+            </div>
+
+            <div className="h-32 w-32 mx-auto spinner text-center"></div>
+            </>
+        );
+    }
     return (
         <>
         <div className="px-4 md:px-0">
@@ -77,10 +115,10 @@ export default function Trading() {
         <div className="trades mt-16 mx-4">
             <div className="w-full flex justify-between items-baseline">
                 <h3 className="text-brand font-bold text-lg mb-1">Recent Trades</h3>
-                <Link to="/trading/all" className="text-gray-600 uppercase font-semibold leading-normal text-sm hover:text-gray-700 hover:font-extrabold cursor-pointer">View more</Link>
+                <Link to="/trading/all" className="px-2 py-1 bg-brand rounded text-white uppercase font-semibold leading-normal text-xs hover:text-gray-300 hover:bg-indigo-700 cursor-pointer">View more</Link>
             </div>
             
-            <div className="flex flex-wrap -mx-2 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 {trades.map((trade, i) => (
                     <Trade
                         key={i}

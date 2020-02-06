@@ -11,15 +11,13 @@
 //General body styles, global to all pages.
 body {
     font-family: "Inter", "Open Sans", sans-serif;
-    -webkit-font-smoothing: subpixel-antialiased;
     backface-visibility: hidden; 
 
     margin: 0px;
     padding: 0px;
-    background-color: #F8F7F8;
     color: $text-color;
-    font-size: 16px;
     display: flex;
+    font-size: 14px;
     flex-direction: column;
     vertical-align: middle;
 }
@@ -106,6 +104,33 @@ body {
     left: -4px;
 }
 
+
+//Spinner styles
+.spinner {
+    position: relative;
+    color: #3A456E !important;
+    pointer-events: none;
+  }
+  
+  .spinner::after {
+    content: '';
+    position: absolute !important;
+    top: calc(50% - (2em / 2));
+    left: calc(50% - (2em / 2));
+    display: block;
+    width: 2em;
+    height: 2em;
+    border: 2px solid currentColor;
+    border-radius: 9999px;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    animation: spinAround 500ms infinite linear;
+  }
+  
+  @keyframes spinAround {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
 
 
 
