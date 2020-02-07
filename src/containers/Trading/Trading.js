@@ -62,19 +62,44 @@ let trades = [
 
 export default function Trading() {
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+    const [companies, setCompanies] = useState([]);
 
-    //trade/buyer=FORM54/
-    // useEffect(()=> {
-    //     //Get the trading data.
-    //     api.get("/trade/buyer/FORM54/").then((res)=> {
-    //         console.log(res);
-    //         setLoading(false);
-    //     }).catch((error)=> {
-    //         console.log(error);
-    //     });
+    useEffect(()=> {
+        console.log("getting company data");
+        api.get("/companies/list").then(response => {
+            console.log(response);
+            setError("");
+            setLoading(false);
+            setCompanies(response.data);
+        }).catch(err => {
+            console.log(err);
+            setError(err.message);
+            setLoading(false);
+        });
+    }, [loading]);
 
-    // });
+    if (error.length > 0) {
+        return (
+            <>
+            <div className="px-4 md:px-0">
+                <div className="flex items-center">
+                    <h1 className="text-brand font-bold text-2xl">Trades &bull; 
+                    <span className="ml-2 text-gray-500 font-normal text-base uppercase tracking-tight"> {date.getDate()} {months[date.getMonth()]} {date.getFullYear()}, {days[date.getDay()]} - {date.getHours()}:{String(date.getMinutes()).padStart(2, "0")}</span></h1>
+                </div>
+                <p>View, manage and act on trade information</p>
+            </div>
+            
+            <div className="mt-6 flex flex-wrap justify-center md:justify-between w-auto">
+                <Action title="Create a Trade" message="Insert a new trade’s data into the system manually" linkTo="/trading/create-trade" icon="create" />
+                <Action title="Edit a Trade" message="Update a trade that already exists to it’s new values" linkTo="/trading/edit-trade" icon="edit" />
+                <Action title="Delete a Trade" message="Delete an already existing trade from the system" linkTo="/trading/delete-trade" icon="delete" />
+            </div>
 
+            <h5 className="text-red-700">{error}</h5>
+            </>
+        );
+    }
     if (loading) {
         return (
             <>

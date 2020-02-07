@@ -7,9 +7,10 @@ const API_BASE_URL = " https://group23.dcs.warwick.ac.uk/api/"
 //Request/response default settings
 let config = {
     baseURL: API_BASE_URL,
-    timeout: 1000,
+    timeout: 5000,
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
+        
     }
 };
 
