@@ -67,7 +67,7 @@ export default function Trading() {
 
     useEffect(()=> {
         console.log("getting company data");
-        api.get("/companies/list").then(response => {
+        api.get("/company/list").then(response => {
             console.log(response);
             setError("");
             setLoading(false);
