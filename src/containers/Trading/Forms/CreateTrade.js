@@ -14,25 +14,51 @@ export default function CreateTrade() {
         <div className="flex flex-col items-center md:items-start">
             <h2 className="text-brand font-bold text-xl">Create a new trade</h2>
             <p>Insert the details for a derivative manually</p>
+            <hr className="my-2" />
+            <p className="text-center">If you choose to have a the trade type be a stock, the buying company is the stock you are buying.</p>
         </div>
 
-        <form className="mt-8 w-11/12 mx-auto h-auto flex flex-col bg-white shadow rounded-lg">
-            <div class="w-full my-2 md:w-1/2 px-3">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
-                    Product Type
-                </label>
-                
-                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Stocks" />
-            </div>
+        <form className="mt-8 w-11/12 p-4 mx-auto h-auto flex flex-col items-center bg-white shadow rounded-lg">
+                {/* Trade type, stock or products */}
+                <div className="my-2 w-10/12">
+                    <label className="block text-center mb-1" htmlFor="type">
+                        <h4 className="text-brand font-semibold text-lg tracking-wide">Type</h4>
+                        <p className="text-gray-600">Are you trading stock(s) or product(s)</p>
+                    </label>
+                    <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="type" placeholder="Stock or Product" />
+                </div>
 
-            {/* SUBMISSION AREA */}
-            <div className="w-full inline-flex flex-col sr-onlyjustify-center my-4">
-                {error.length > 0 ? <p className="mx-auto my-1 text-red-500 font-semibold">
-                    <svg className="h-6 w-6 inline mr-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm0-9a1 1 0 0 1 1 1v4a1 1 0 0 1-2 0v-4a1 1 0 0 1 1-1zm0-4a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/></svg>
-                    Your id is not valid!
-                </p> : ""}
-                <button className="mx-auto text-center px-3 py-2 rounded shadow bg-brand text-white uppercase font-semibold text-sm" type="submit">Create Trade</button>
-            </div>
+                <div className="w-10/12 flex flex-col md:w-10/12 md:flex-row md:justify-between">
+                    {/* The buying company */}
+                    <div className="my-3 md:w-2/5">
+                        <label className="block text-center mb-1" htmlFor="buyingCompany">
+                            <h4 className="text-brand font-semibold text-lg tracking-wide">Buying Company</h4>
+                        </label>
+                        <input className="md:text-center shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="buyingCompany" placeholder="Buying Company" />
+                    </div>
+
+                    {/* The selling company */}
+                    <div className="my-3 md:w-2/5">
+                        <label className="block text-center mb-1" htmlFor="sellingCompany">
+                            <h4 className="text-brand font-semibold text-lg tracking-wide">Selling Company</h4>
+                        </label>
+                        <input className="md:text-center shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="sellingCompany" placeholder="Selling Company" />
+                    </div>
+
+                </div>
+
+
+                {/* Quantity traded */}
+                <div className="my-3 w-2/5">
+                    <label className="block text-center mb-1" htmlFor="quantity">
+                        <h4 className="text-brand font-semibold text-lg tracking-wide">Quantity</h4>
+                    </label>
+                    <input className="text-center shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="number" id="quantity" min="1" max="5" />
+                </div>
+
+
+                <p className="mt-6 text-center">CompanyA is selling 12 jeeps to CompanyB in 100 days</p>
+                <button className="mx-auto mt-2 text-center px-3 py-2 rounded shadow bg-brand text-white uppercase font-semibold text-sm" type="submit">Create Trade</button>
         </form>
         </>
     );

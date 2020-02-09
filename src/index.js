@@ -13,6 +13,8 @@ import Home from "./containers/Home/Home.js";
 import Trading from "./containers/Trading/Trading.js";
 //Trading forms, create, edit, delete
 import CreateTrade from "./containers/Trading/Forms/CreateTrade.js";
+import EditTrade from './containers/Trading/Forms/EditTrade';
+import DeleteTrade from './containers/Trading/Forms/DeleteTrade';
 
 
 //Reports page
@@ -32,6 +34,8 @@ render(
                 <IndexRoute component={Home} />
                 <Route path="/trading" component={Trading} />
                 <Route path="/trading/create-trade" component={CreateTrade} />
+                <Route path="/trading/edit-trade" component={EditTrade} />
+                <Route path="/trading/delete-trade" component={DeleteTrade} />
 
                 <Route path="/reports" component={Reports} />
 

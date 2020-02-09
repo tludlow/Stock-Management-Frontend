@@ -20,7 +20,7 @@ export default function Reports() {
                 <p className="text-md">Search for a report by it's contents</p>
                 <form className="flex" action="">
                     <input className="px-2 py-1 rounded-l" type="text" placeholder="Search"/>
-                    <button className="px-4 py-1 bg-indigo-600 text-white rounded-r" type="submit">Go</button>
+                    <button className="px-4 py-1 bg-brand hover:bg-indigo-500 text-white rounded-r" type="submit">Go</button>
                 </form>
             </div>
         </div>
