@@ -13,71 +13,26 @@ const months = ["Jan", "Feb" , "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", 
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 let date = new Date()
 
-let trades = [
-    {
-        risk: 33,
-        type: "Stock",
-        buyingCompany: "Apple",
-        sellingCompany: "Google",
-        quantity: 123,
-        strikePrice: "27.63",
-        underlyingCurrency: "USD",
-        underlyingCurrencySymbol: "$",
-        maturityDate: "24th Mar 2020"
-    },
-    {
-        risk: 33,
-        type: "Stock",
-        buyingCompany: "Apple",
-        sellingCompany: "Google",
-        quantity: 123,
-        strikePrice: "27.63",
-        underlyingCurrency: "USD",
-        underlyingCurrencySymbol: "$",
-        maturityDate: "24th Mar 2020"
-    },
-    {
-        risk: 55,
-        type: "Alpaca",
-        buyingCompany: "Argos",
-        sellingCompany: "B&Q",
-        quantity: 123,
-        strikePrice: "27.63",
-        underlyingCurrency: "EUR",
-        underlyingCurrencySymbol: "£",
-        maturityDate: "24th Mar 2020"
-    },
-    {
-        risk: 70,
-        type: "Stock",
-        buyingCompany: "Apple",
-        sellingCompany: "Google",
-        quantity: 123,
-        strikePrice: "27.63",
-        underlyingCurrency: "USD",
-        underlyingCurrencySymbol: "$",
-        maturityDate: "24th Mar 2020"
-    },
-]
-
 export default function Trading() {
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
-    const [companies, setCompanies] = useState([]);
+    const [trades, setTrades] = useState([]);
 
     useEffect(()=> {
         console.log("getting company data");
-        api.get("/company/list").then(response => {
+        api.get("/trade/recent?page_number=1").then(response => {
             console.log(response);
             setError("");
             setLoading(false);
-            setCompanies(response.data);
+            setTrades(response.data);
+            console.log(trades);
         }).catch(err => {
             console.log(err);
             setError(err.message);
             setLoading(false);
         });
-    }, [loading]);
+        
+    }, []);
 
     if (error.length > 0) {
         return (
@@ -143,17 +98,18 @@ export default function Trading() {
                 <Link to="/trading/all" className="px-2 py-1 bg-brand rounded text-white uppercase font-semibold leading-normal text-xs hover:text-gray-300 hover:bg-indigo-700 cursor-pointer">View more</Link>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
                 {trades.map((trade, i) => (
                     <Trade
                         key={i}
-                        risk={trade.risk}
-                        type={trade.type} 
-                        buyingCompany={trade.buyingCompany} 
-                        sellingCompany={trade.sellingCompany} 
+                        risk={69}
+                        id={trade.id}
+                        type={trade.product_id} 
+                        buyingCompany={trade.buying_party} 
+                        sellingCompany={trade.selling_party} 
                         quantity={trade.quantity} 
-                        strikePrice={trade.strikePrice}
-                        maturityDate={trade.maturityDate}
+                        strikePrice={trade.strike_price}
+                        maturityDate={trade.maturity_date}
                     />
                 ))}
             </div>

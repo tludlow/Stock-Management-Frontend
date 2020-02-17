@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { browserHistory } from "react-router";
 
 export default function Trade(props) {
     //Risk is either: none, low, medium, high
@@ -18,8 +19,8 @@ export default function Trade(props) {
     });
 
     return (
-        <div className="w-full px-2 mt-4 pb-1 overflow-hidden">
-            <div className="relative bg-white shadow rounded-lg p-4 overflow-hidden">
+        <div onClick={()=> browserHistory.push("/trade/" + props.id)} className="w-full mt-4 pb-1 overflow-hidden ">
+            <div className="cursor-pointer hover:shadow-md relative bg-white shadow rounded-lg p-4 overflow-hidden">
             <div className={"absolute risk-ribbon w-4 h-8 " + riskCategory}></div>
             <div className="w-auto h-auto flex justify-between">
                 <div className="flex flex-col">
@@ -38,7 +39,7 @@ export default function Trade(props) {
                     </p>
                 </div>
                 <div className="flex items-center">
-                    <p className="text-white text-sm bg-gray-500 rounded px-4 py-1 uppercase font-semibold">{props.maturityDate}</p>
+                    <p className="text-white text-xs bg-gray-500 rounded px-4 py-1 uppercase font-semibold">{props.maturityDate}</p>
                 </div>
             </div>
             </div>

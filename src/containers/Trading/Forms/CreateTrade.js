@@ -47,6 +47,23 @@ export default function CreateTrade() {
 
                 </div>
 
+                <div className="w-10/12 flex flex-col md:w-10/12 md:flex-row md:justify-between">
+                    {/* The notional currency */}
+                    <div className="my-3 md:w-2/5">
+                        <label className="block text-center mb-1" htmlFor="notionalCurrency">
+                            <h4 className="text-brand font-semibold text-lg tracking-wide">Notional Currency</h4>
+                        </label>
+                        <input className="md:text-center shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="notionalCurrency" placeholder="Notional Currency" />
+                    </div>
+
+                    {/* The underlying currency */}
+                    <div className="my-3 md:w-2/5">
+                        <label className="block text-center mb-1" htmlFor="underlyingCurrency">
+                            <h4 className="text-brand font-semibold text-lg tracking-wide">Underlying Currency</h4>
+                        </label>
+                        <input className="md:text-center shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="underlyingCurrency" placeholder="Underlying Currency" />
+                    </div>
+                </div>
 
                 {/* Quantity traded */}
                 <div className="my-3 w-2/5">
@@ -56,6 +73,21 @@ export default function CreateTrade() {
                     <input className="text-center shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="number" id="quantity" min="1" max="5" />
                 </div>
 
+                {/* Strike price */}
+                <div className="my-3 w-2/5">
+                    <label className="block text-center mb-1" htmlFor="strikePrice">
+                        <h4 className="text-brand font-semibold text-lg tracking-wide">Strike Price</h4>
+                    </label>
+                    <input className="text-center shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="number" id="strikePrice" min="1" max="5" />
+                </div>
+
+                {/* Maturity Date */}
+                <div className="my-3 w-2/5">
+                    <label className="block text-center mb-1" htmlFor="maturityDate">
+                        <h4 className="text-brand font-semibold text-lg tracking-wide">Maturity Date</h4>
+                    </label>
+                    <input className="text-center shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight" type="date" id="maturityDate" name="maturityDate" />
+                </div>
 
                 <p className="mt-6 text-center">CompanyA is selling 12 jeeps to CompanyB in 100 days</p>
                 <button className="mx-auto mt-2 text-center px-3 py-2 rounded shadow bg-brand text-white uppercase font-semibold text-sm" type="submit">Create Trade</button>

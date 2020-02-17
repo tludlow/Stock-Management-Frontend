@@ -2,17 +2,14 @@ import axios from "axios";
 
 //The URL for the API which is the standard part, all endpoints are additions to this API
 //const LOCAL_TESTING = "http://localhost:6789"
-const API_BASE_URL = " https://group23.dcs.warwick.ac.uk/api/"
+const API_BASE_URL = "http://localhost:8000/api"
 
 //Request/response default settings
 let config = {
     baseURL: API_BASE_URL,
-    timeout: 1000,
+    timeout: 3000,
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
-        "Access-Control-Allow-Headers": "*"   
     }
 };
 

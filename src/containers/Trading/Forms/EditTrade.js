@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 export default function EditTrade() {
     const [gotTrade, setGotTrade] = useState("");
 
-    if (gotTrade.length == 0) {
+    if (gotTrade.length === 0) {
         return (
             <>
                 <h2 className="text-brand text-2xl font-bold">Edit a Trade</h2>

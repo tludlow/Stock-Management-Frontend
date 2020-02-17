@@ -16,6 +16,8 @@ import CreateTrade from "./containers/Trading/Forms/CreateTrade.js";
 import EditTrade from './containers/Trading/Forms/EditTrade';
 import DeleteTrade from './containers/Trading/Forms/DeleteTrade';
 
+import Trade from "./containers/Trade/Trade";
+
 
 //Reports page
 import Reports from "./containers/Reports/Reports.js";
@@ -36,6 +38,7 @@ render(
                 <Route path="/trading/create-trade" component={CreateTrade} />
                 <Route path="/trading/edit-trade" component={EditTrade} />
                 <Route path="/trading/delete-trade" component={DeleteTrade} />
+                <Route path="/trade/:tradeID" component={Trade} />
 
                 <Route path="/reports" component={Reports} />
 
