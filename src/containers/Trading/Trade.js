@@ -25,7 +25,16 @@ export default function Trade(props) {
             <div className="w-auto h-auto flex justify-between">
                 <div className="flex flex-col">
                     <h3 className="flex flex-col">
-                        <span className="text-brand font-bold tracking-wide">{props.product}</span>
+                        {props.product === "Stocks" ?  
+                            <span className="text-brand font-bold tracking-wide">{props.product} 
+                                <span className="font-light text-xs">
+                                    ({props.selling_company})
+                                </span>
+                            </span> :
+                            <span className="text-brand font-bold tracking-wide">
+                                {props.product}
+                            </span>
+                        }
                         <span className="text-gray-600 text-sm uppercase font-semibold">{props.strikePrice} x {props.quantity}</span>
                     </h3>
                 </div>
