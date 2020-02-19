@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 //AutoSuggestion inputs
-import CompanyAutoSuggest from "./AutoSuggestions/CompanyAutoSuggest";
+//import CompanyAutoSuggest from "./AutoSuggestions/CompanyAutoSuggest";
 
 
 export default function CreateTrade() {
     //Data for the auto suggested form inputs is found through the redux state of the app.
     //const [buyingCompany, setBuyingCompany] = useState('');
-    const [error, setError] = useState("")
+    //const [error, setError] = useState("")
 
     return (
         <>

@@ -2,7 +2,7 @@ import React from 'react';
 import moment from "moment";
 import { browserHistory } from "react-router";
 
-import Report from "./Report";
+//import Report from "./Report";
 
 export default function Reports() {
     //The end of this day, which is midnight, which is when the next report is generated,

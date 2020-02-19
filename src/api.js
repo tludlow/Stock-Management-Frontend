@@ -7,7 +7,7 @@ const API_BASE_URL = "http://localhost:8000/api"
 //Request/response default settings
 let config = {
     baseURL: API_BASE_URL,
-    timeout: 3000,
+    timeout: 5000,
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
     }

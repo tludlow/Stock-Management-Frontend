@@ -25,17 +25,20 @@ export default function Trade(props) {
             <div className="w-auto h-auto flex justify-between">
                 <div className="flex flex-col">
                     <h3 className="flex flex-col">
-                        <span className="text-brand font-bold tracking-wide">{props.type}</span>
+                        <span className="text-brand font-bold tracking-wide">{props.product}</span>
                         <span className="text-gray-600 text-sm uppercase font-semibold">{props.strikePrice} x {props.quantity}</span>
                     </h3>
                 </div>
                 <div className="flex items-center">
                     <p className="leading-none flex">
-                        {props.sellingCompany}
-                        <span className="fill-current text-brand w-4 h-4  mx-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.59 13H3a1 1 0 0 1 0-2h15.59l-5.3-5.3a1 1 0 1 1 1.42-1.4l7 7a1 1 0 0 1 0 1.4l-7 7a1 1 0 0 1-1.42-1.4l5.3-5.3z"/></svg>
-                        </span>
-                        {props.buyingCompany}
+                        <div className="flex flex-col text-center mr-2">
+                            <p className="text-green-700">Buyer</p>
+                            <p>{props.buying_company}</p>
+                        </div>
+                        <div className="flex flex-col text-center ml-2">
+                            <p className="text-red-600">Seller</p>
+                            <p>{props.selling_company}</p>
+                        </div>
                     </p>
                 </div>
                 <div className="flex items-center">
