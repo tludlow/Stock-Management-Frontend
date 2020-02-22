@@ -21,6 +21,7 @@ import Trade from "./containers/Trade/Trade";
 
 //Reports page
 import Reports from "./containers/Reports/Reports.js";
+import Report from "./containers/Reports/Report.js";
 
 import FourOFour from "./containers/FourOFour";
 
@@ -41,6 +42,7 @@ render(
                 <Route path="/trade/:tradeID" component={Trade} />
 
                 <Route path="/reports" component={Reports} />
+                <Route path="/report/:reportDate" component={Report} />
 
                 <Route path="/*" component={FourOFour} />
             </Route>

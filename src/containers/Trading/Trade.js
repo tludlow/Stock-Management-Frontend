@@ -19,14 +19,14 @@ export default function Trade(props) {
     });
 
     return (
-        <div onClick={()=> browserHistory.push("/trade/" + props.id)} className="w-full mt-4 pb-1 overflow-hidden ">
+        <div onClick={()=> browserHistory.push("/trade/" + props.id)} className="w-full h-full mt-4 pb-1 overflow-hidden ">
             <div className="cursor-pointer hover:shadow-md relative bg-white shadow rounded-lg p-4 overflow-hidden">
             <div className={"absolute risk-ribbon w-4 h-8 " + riskCategory}></div>
             <div className="w-auto h-auto flex justify-between">
-                <div className="flex flex-col">
+                <div className="flex flex-col flex-grow-0 overflow-hidden">
                     <h3 className="flex flex-col">
                         {props.product === "Stocks" ?  
-                            <span className="text-brand font-bold tracking-wide">{props.product} 
+                            <span className="text-brand font-bold tracking-wide ">{props.product} 
                                 <span className="font-light text-xs">
                                     ({props.selling_company})
                                 </span>
