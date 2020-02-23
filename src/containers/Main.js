@@ -9,7 +9,7 @@ export default function Main(props) {
             <header className="bg-brand shadow-lg sm:flex sm:justify-between sm:items-center sm:px-20 sm:py-1">
                 <div className="flex items-center justify-between px-4 py-1 sm:p-0">
                     <div className="hover:cursor-pointer">
-                        <h1 onClick={()=> browserHistory.push("/")} className="text-white font-bold text-2xl hover:cursor-pointer"><span className="text-blue-500 hover:cursor-pointer">Group</span> 23</h1>
+                        <h1 onClick={()=> browserHistory.push("/")} className="text-white font-bold text-2xl hover:cursor-pointer"><span className="text-blue-400 hover:cursor-pointer">Group</span> 23</h1>
                     </div>
                     <div className="sm:hidden">
                     <button onClick={()=> setIsOpen(!isOpen)} type="button" className="block text-gray-500 hover:text-white focus:text-white focus:outline-none">

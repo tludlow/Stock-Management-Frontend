@@ -46,7 +46,7 @@ export default function Reports() {
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
 
                 {dates.map((date, index)=> (
-                    <div className="w-full flex flex-col items-center p-4 bg-white shadow-md rounded">
+                    <div key={index} className="w-full flex flex-col items-center p-4 bg-white shadow-md rounded">
                         <h4 className="mb-4 text-brand font-bold text-lg">{date.date}</h4>
                         <p>Total Trades: 100</p>
                         <div className="w-full mt-2 flex justify-around">
@@ -71,10 +71,6 @@ export default function Reports() {
                         <div className="mt-4 flex">
                             <button onClick={()=> browserHistory.push(`/report/${date.date}`)} className="bg-brand mr-4 h-10 text-white px-2 py-1 rounded hover:shadow hover:bg-indigo-500">
                                 Access Report
-                            </button>
-                            <button className="flex fill-current items-center bg-gray-700 px-2 py-1 rounded shadow-md hover:bg-gray-600 hover:shadow-lg">
-                                <p className="text-white pr-3">PDF</p>
-                                <svg className="w-6 h-6 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 2h9a1 1 0 0 1 .7.3l4 4a1 1 0 0 1 .3.7v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2zm9 2.41V7h2.59L15 4.41zM18 9h-3a2 2 0 0 1-2-2V4H6v16h12V9z"/></svg>
                             </button>
                         </div>
                     </div>

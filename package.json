@@ -6,6 +6,7 @@
     "@babel/core": "7.2.2",
     "@babel/runtime": "^7.8.3",
     "@fullhuman/postcss-purgecss": "^2.0.5",
+    "@react-pdf/renderer": "^1.6.8",
     "@svgr/webpack": "4.1.0",
     "autoprefixer": "^9.7.4",
     "axios": "^0.18.0",
