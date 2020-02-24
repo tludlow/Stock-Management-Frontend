@@ -9,6 +9,7 @@ export default function DeleteTrade() {
     const [tradeID, setTradeID] = useState("");
     const [trade, setTrade] = useState([]);
     const [error, setError] = useState("");
+    const [justDeleted, setJustDeleted] = useState(false);
 
     const submit = e => {
         e.preventDefault();
@@ -19,26 +20,47 @@ export default function DeleteTrade() {
 
     const getTrade = id => {
         api.get("/trade/id=" + id).then(response => {
+            setError("");
             setLoading(false);
-            setTrade(response.data[0]);
-            console.log(response);
+            setJustDeleted(false);
+            if (response.data.length === 0) {
+                setError("No trades exist with that ID")
+            } else {
+                setTrade(response.data[0]);
+                console.log(response);
+            }
+            
         }).catch(err => {
+            console.log(err);
             setLoading(false);
             setError(err.message);
         });
     }
 
-    if(error.length > 0) {
-        return (
-            <>
-                <p>Error loading trade:</p>
-                <p className="text-red-600">{error}</p>
-            </>
-        )
+    const deleteTrade = id => {
+        setLoading(true);
+        api.post("/trade/delete",
+        {
+            trade_id: id
+        }).then(response => {
+            console.log(response);
+            setLoading(false);
+            setJustDeleted(true);
+        }).catch(err => {
+            console.log(err);
+            setError(err.message);
+            setLoading(false);
+        });
     }
 
     return (
         <>
+        {error.length > 0 &&  
+            <>
+                <p className="text-red-800 font-bold text-xl">Error</p>
+                <p className="text-red-600">{error}</p>
+            </>}
+        {justDeleted && <p className="text-green-600 font-semibold mb-4">Successfully deleted trade: {tradeID} </p>}
         <h2 className="text-brand text-2xl font-bold">Delete a Trade</h2>
         <p>Search for the ID of a trade you wish to delete</p>
 
@@ -53,7 +75,7 @@ export default function DeleteTrade() {
 
         {loading ? <div className="h-32 w-32 mx-auto spinner text-center"></div> : ""}
         
-        {!Array.isArray(trade) ?
+        {error.length === 0 && tradeID.length > 0 && !justDeleted?
             <div className="w-8/12 mt-8 py-4 px-4 text-center rounded shadow bg-white">
                 <p><span className="font-bold">Trade ID</span>: {trade.id}</p>
                 <p><span className="font-bold">Product ID</span>: {trade.product}</p>
@@ -67,7 +89,7 @@ export default function DeleteTrade() {
                 <p><span className="font-bold">Underlying Currency</span>: {trade.underlying_currency}</p>
 
                 <div className="mt-6 w-full mx-auto flex justify-center">
-                    <button className="ml-2 px-4 py-1 text-white rounded shadow bg-red-700 hover:cursor-pointer hover:bg-red-500">Delete</button>
+                    <button onClick={()=> deleteTrade(trade.id)} className="ml-2 px-4 py-1 text-white rounded shadow bg-red-700 hover:cursor-pointer hover:bg-red-500">Delete</button>
                 </div>
             </div>
         : ""}
