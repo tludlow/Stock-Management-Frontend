@@ -55,7 +55,6 @@ export default function Trade(props) {
                 <div className="mt-6 w-full mx-auto flex justify-center">
                     <button className="mr-2 px-4 py-1 text-white rounded shadow bg-indigo-700 hover:cursor-pointer hover:bg-indigo-500">Edit</button>
                     <button className="ml-2 px-4 py-1 text-white rounded shadow bg-red-700 hover:cursor-pointer hover:bg-red-500">Delete</button>
-                    
                 </div>
             </div>
             

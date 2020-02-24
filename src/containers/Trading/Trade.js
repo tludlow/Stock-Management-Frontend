@@ -39,7 +39,7 @@ export default function Trade(props) {
                     </h3>
                 </div>
                 <div className="flex items-center">
-                    <p className="leading-none flex">
+                    <div className="leading-none flex">
                         <div className="flex flex-col text-center mr-2">
                             <p className="text-green-700">Buyer</p>
                             <p>{props.buying_company}</p>
@@ -48,7 +48,7 @@ export default function Trade(props) {
                             <p className="text-red-600">Seller</p>
                             <p>{props.selling_company}</p>
                         </div>
-                    </p>
+                    </div>
                 </div>
                 <div className="flex items-center">
                     <p className="text-white text-xs bg-gray-500 rounded px-4 py-1 uppercase font-semibold">{props.maturityDate}</p>
