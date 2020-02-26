@@ -146,7 +146,6 @@ export default function CreateTrade() {
             return
         }
         if(buyingCompany !== null && sellingCompany != null && buyingCompany.name === sellingCompany.name) {
-            console.log(sellingCompany.name, buyingCompany.name)
             setFormError("The buying and selling company should not be the same")
             return
         }
@@ -159,7 +158,7 @@ export default function CreateTrade() {
             return
         }
         if(product === null) {
-            setFormError("Please enter a product being traded")
+            setFormError("Please enter a product being traded. You might have switched selling company after choosing a product. Please reselect the product")
             return
         }
         if(underlyingCurrency === null) {
@@ -170,14 +169,23 @@ export default function CreateTrade() {
             setFormError("Please enter a notional currency")
             return
         }
+        if(underlyingCurrency !== null && notionalCurrency != null && notionalCurrency.currency === underlyingCurrency.currency) {
+            setFormError("The underlying and notional currencies should be different")
+            return
+        }
         if(strikePrice < 0.01) {
             setFormError("Please enter a strike price")
             return
         }
         if(underlyingPrice < 0.01) {
-            console.log(strikePrice)
             setFormError("Please enter an underlying price")
             return
+        }
+        if (product !== undefined) {
+            if (product.name.includes("Stocks") && !product.name.includes(sellingCompany.name)) {
+                setFormError("Please update the stocks being purchased in the product section, you updated the selling company after selling the stock product.")
+                return
+            }
         }
         setFormError("")    
     }
