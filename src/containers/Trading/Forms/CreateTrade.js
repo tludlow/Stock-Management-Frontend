@@ -13,18 +13,36 @@ export default function CreateTrade() {
     const [products, setProducts] = useState([]);
     const [currencies, setCurrencies] = useState([]);
     const [error, setError] = useState("");
-    const [formError, setFormError] = useState("");
+    const [formError, setFormError] = useState("Please enter all of the trade information");
 
     const [sellingCompany, setSellingCompany] = useState(null);
     const [buyingCompany, setBuyingCompany] = useState(null);
     const [product, setProduct] = useState(null);
+    const [underlyingCurrency, setUnderlyingCurrency] = useState(null);
+    const [notionalCurrency, setNotionalCurrency] = useState(null);
+    const [maturityDate, setMaturityDate] = useState(null);
+    const [quantity, setQuantity] = useState(1);
+    const [strikePrice, setStrikePrice] = useState(0);
+    const [underlyingPrice, setUnderlyingPrice] = useState(0);
 
     useEffect(()=> {
         getCompaniesAndCurrenciesAndProducts();
-    }, []);
+
+        let interval = setInterval(() => {
+            verifyForm(sellingCompany, buyingCompany, product, underlyingCurrency, notionalCurrency, maturityDate, quantity, strikePrice, underlyingPrice);
+        }, 500);
+
+        return ()=> {
+            clearInterval(interval);
+        }
+    }, [sellingCompany, buyingCompany, product, underlyingCurrency, notionalCurrency, maturityDate, quantity, strikePrice, underlyingPrice]);
 
     //Gets products, companies and currencies from the backend so we can auto suggest these to the user
     const getCompaniesAndCurrenciesAndProducts = () => {
+        //Dont get new data for this if we already have it
+        if (companies.length !== 0 && products.length !== 0 && currencies.length !== 0) {
+            return
+        }
         setLoading(true);
         axios.all([
             api.get("/company/list"),
@@ -44,14 +62,15 @@ export default function CreateTrade() {
             setLoading(false);
             console.log(err);
         });
-
+        verifyForm()
     }
 
     const onDropdownChangeCompanies = (tag, event, values) => {
         console.log(tag, values)
-        setFormError("")
         if (tag === "selling-company") {
             setSellingCompany(values)
+
+            //Check to delete the products before setting company to null, the products depend upon the selling company
             if (values === null) {
                 setSellingCompany(null)
                 setProduct(null)
@@ -69,11 +88,70 @@ export default function CreateTrade() {
             setBuyingCompany(values)
         }
     }
+
+    const onDropdownChangeCurrencies = (tag, event, values) => {
+        console.log(tag, values)
+        if (tag === "underlying-currency") {
+            setUnderlyingCurrency(values)
+        }
+        if (tag === "notional-currency") {
+            setNotionalCurrency(values)
+        } 
+    }
     
     const onDropdownChangeProduct = (event, values) => {
         console.log(event, values)
         setProduct(values)
     }
+    const maturityDateChange = (event) => {
+        setMaturityDate(event.target.value)
+    }
+
+    const quantityChange = (event) => {
+        setQuantity(event.target.value)
+    }
+
+    const strikePriceChange = (event) => {
+        setStrikePrice(event.target.value)
+    }
+
+    const underlyingPriceChange = (event) => {
+        setUnderlyingPrice(event.target.value)
+    }
+
+    const verifyForm = (sellingCompany, buyingCompany, product, underlyingCurrency, notionalCurrency, maturityDate, quantity, strikePrice, underlyingPrice) => {
+        if (sellingCompany === null) {
+            setFormError("Please enter a selling company")
+        }
+        if (buyingCompany === null) {
+            setFormError("Please enter a buying company")
+        }
+        if(buyingCompany !== null && sellingCompany != null && buyingCompany.name === sellingCompany.name) {
+            setFormError("The buying and selling company should not be the same")
+        }
+        if(quantity < 1) {
+            setFormError("The quantity should be greater than 0")
+        }
+        if(maturityDate === "") {
+            setFormError("Please enter a maturity date")
+        }
+        if(product === null) {
+            setFormError("Please enter a product being traded")
+        }
+        if(underlyingCurrency === null) {
+            setFormError("Please enter an underlying currency")
+        }
+        if(notionalCurrency === null) {
+            setFormError("Please enter a notional currency")
+        }
+        if(strikePrice < 0.01) {
+            setFormError("Please enter a strike price")
+        }
+        if(underlyingPrice < 0.01) {
+            setFormError("Please enter an underlying price")
+        }
+    }
+
     /**
      * VIEWS
      */
@@ -149,7 +227,7 @@ export default function CreateTrade() {
 
                 {sellingCompany === null ?
                 <>
-                <p className="text-red-500 text-xs uppercase font-semibold tracking-wide">Please choose a selling company first</p>
+                <p className="text-red-400 text-xs uppercase italic tracking-wide">Please choose a selling company first</p>
                 <Autocomplete
                     id="product-dropdown"
                     name="product-dropdown"
@@ -172,11 +250,74 @@ export default function CreateTrade() {
                     renderInput={params => <TextField {...params} label="Product" variant="outlined" />}
                 />
                 }
-                
+            </div>
+
+            {/* Underlying Currency */}
+            <div className="mb-8">
+                <p className="mb-2 text-brand text-md font-semibold">Underlying Currency</p>
+                <Autocomplete
+                    id="underlying-currency-dropdown"
+                    name="underlying-currency-dropdown"
+                    options={currencies}
+                    onChange={(event, values)=> onDropdownChangeCurrencies("underlying-currency", event, values)}
+                    getOptionLabel={option => option.currency}
+                    style={{ width: 300 }}
+                    renderInput={params => <TextField {...params} label="Underlying Currency" variant="outlined" />}
+                />
+            </div>
+
+            {/* Underlying Currency */}
+            <div className="mb-8">
+                <p className="mb-2 text-brand text-md font-semibold">Notional Currency</p>
+                <Autocomplete
+                    id="notional-currency-dropdown"
+                    name="notional-currency-dropdown"
+                    options={currencies}
+                    onChange={(event, values)=> onDropdownChangeCurrencies("notional-currency", event, values)}
+                    getOptionLabel={option => option.currency}
+                    style={{ width: 300 }}
+                    renderInput={params => <TextField {...params} label="Notional Currency" variant="outlined" />}
+                />
+            </div>
+
+            {/* Quantity */}
+            <div className="mb-8">
+                <p className="text-brand text-md font-semibold">Quantity</p>
+                <small className="mb-2">Minimum quantity is 1</small><br />
+                <input onChange={quantityChange} value={quantity} min="1" className="w-64 py-4 px-6 rounded border hover:border-gray-600" type="number" name="quantity" id="quantity"/>
+            </div>
+
+            {/* Maturity Date */}
+            <div className="mb-8">
+                <p className="mb-2 text-brand text-md font-semibold">Maturity Date</p>
+                <input onChange={maturityDateChange} min={new Date().toISOString().split('T')[0]} className="w-64 py-4 px-6 rounded border hover:border-gray-600" type="date" name="maturity-date" id="maturity-date"/>
             </div>
             
-            {formError.length > 0 && <p className="mb-4 text-red-600 font-semibold text-md">Error! {formError}</p>}
-            <button className="mx-auto mt-2 text-center px-3 py-2 rounded shadow bg-brand text-white uppercase font-semibold text-sm" type="submit">Create Trade</button>
+            {/* Underlying Price */}
+            <div className="mb-8">
+                <p className="mb-2 text-brand text-md font-semibold">Underlying Price</p>
+                {underlyingCurrency === null ? <p>The current price per unit represented in the underlying currency</p> : <p>The current price per unit represented in the underlying currency:  {underlyingCurrency.currency}</p>}
+                <input disabled={underlyingCurrency === null} onChange={underlyingPriceChange} min={0.01} step=".01" className="w-64 py-4 px-6 rounded border hover:border-gray-600" type="number" name="underlying-price" id="underlying-price"/>
+            </div>
+
+            {/* Stike Price */}
+            <div className="mb-8">
+                <p className="mb-2 text-brand text-md font-semibold">Strike Price</p>
+                {underlyingCurrency === null ? <p>Strike price is represented in the underlying currency</p> : <p>Strike price is represented in the underlying currency:  {underlyingCurrency.currency}</p>}
+                <input disabled={underlyingCurrency === null} onChange={strikePriceChange} min={0.01} step=".01" className="w-64 py-4 px-6 rounded border hover:border-gray-600" type="number" name="strike-price" id="strike-price"/>
+            </div>
+            
+            {formError.length > 0 ?
+                <>
+                <p className="mb-4 text-red-600 font-semibold text-md">Error! {formError}</p>
+                <button className="mx-auto mt-2 text-center px-3 py-2 rounded shadow bg-red-800 text-white uppercase font-semibold text-sm hover:cursor-not-allowed" type="submit"><i className="fas fa-ban"></i> Form Incomplete</button>
+                </>
+                :
+                <button className="mx-auto mt-2 text-center px-3 py-2 rounded shadow bg-brand text-white uppercase font-semibold text-sm" type="submit">Create Trade</button>
+            }
+
+
+            
         </form>
         </>
     );
