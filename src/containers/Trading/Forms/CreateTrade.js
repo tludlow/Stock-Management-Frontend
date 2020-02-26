@@ -240,7 +240,7 @@ export default function CreateTrade() {
             </p>
         </div>
 
-        <form onSubmit={onSubmit} className="mt-8 w-11/12 p-4 mx-auto h-auto flex flex-col items-center bg-white shadow rounded-lg">
+        <form onSubmit={onSubmit} className="mt-8 w-11/12 p-4 mx-auto h-auto flex flex-col justify-center items-center bg-white shadow rounded-lg">
             
             {/* Selling Company */}
             <div className="mb-8">
@@ -330,30 +330,30 @@ export default function CreateTrade() {
             </div>
 
             {/* Quantity */}
-            <div className="mb-8">
+            <div className="mb-8" style={{width: "300px"}}>
                 <p className="text-brand text-md font-semibold">Quantity</p>
                 <small className="mb-2">Minimum quantity is 1</small><br />
-                <input onChange={quantityChange} value={quantity} min="1" className="w-64 py-4 px-6 rounded border hover:border-gray-600" type="number" name="quantity" id="quantity"/>
+                <input onChange={quantityChange} value={quantity} min="1" className="w-full py-4 px-6 rounded border hover:border-gray-600" type="number" name="quantity" id="quantity"/>
             </div>
 
             {/* Maturity Date */}
-            <div className="mb-8">
+            <div className="mb-8" style={{width: "300px"}}>
                 <p className="mb-2 text-brand text-md font-semibold">Maturity Date</p>
-                <input onChange={maturityDateChange} min={new Date().toISOString().split('T')[0]} className="w-64 py-4 px-6 rounded border hover:border-gray-600" type="date" name="maturity-date" id="maturity-date"/>
+                <input onChange={maturityDateChange} min={new Date().toISOString().split('T')[0]} className="w-full py-4 px-6 rounded border hover:border-gray-600" type="date" name="maturity-date" id="maturity-date"/>
             </div>
             
             {/* Underlying Price */}
-            <div className="mb-8">
+            <div className="mb-8" style={{width: "300px"}}>
                 <p className="mb-2 text-brand text-md font-semibold">Underlying Price</p>
                 {underlyingCurrency === null ? <p>The current price per unit represented in the underlying currency</p> : <p>The current price per unit represented in the underlying currency:  {underlyingCurrency.currency}</p>}
-                <input disabled={underlyingCurrency === null} onChange={underlyingPriceChange} min={0.01} step=".01" className="w-64 py-4 px-6 rounded border hover:border-gray-600" type="number" name="underlying-price" id="underlying-price"/>
+                <input disabled={underlyingCurrency === null} onChange={underlyingPriceChange} min={0.01} step=".01" className="w-full py-4 px-6 rounded border hover:border-gray-600" type="number" name="underlying-price" id="underlying-price"/>
             </div>
 
             {/* Stike Price */}
-            <div className="mb-8">
+            <div className="mb-8" style={{width: "300px"}}>
                 <p className="mb-2 text-brand text-md font-semibold">Strike Price</p>
                 {underlyingCurrency === null ? <p>Strike price is represented in the underlying currency</p> : <p>Strike price is represented in the underlying currency:  {underlyingCurrency.currency}</p>}
-                <input disabled={underlyingCurrency === null} onChange={strikePriceChange} min={0.01} step=".01" className="w-64 py-4 px-6 rounded border hover:border-gray-600" type="number" name="strike-price" id="strike-price"/>
+                <input disabled={underlyingCurrency === null} onChange={strikePriceChange} min={0.01} step=".01" className="w-full py-4 px-6 rounded border hover:border-gray-600" type="number" name="strike-price" id="strike-price"/>
             </div>
             
             {formError.length > 0 ?
@@ -364,7 +364,8 @@ export default function CreateTrade() {
                 :
                 <button className="mx-auto mt-2 text-center px-3 py-2 rounded shadow bg-brand text-white uppercase font-semibold text-sm" type="submit">Create Trade</button>
             }
-
+            
+            
 
             
         </form>
