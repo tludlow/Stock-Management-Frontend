@@ -1,5 +1,19 @@
 module.exports = {
   theme: {
+    spinner: (theme) => ({
+      default: {
+        color: '#3A456E', // color you want to make the spinner
+        size: '1.4em', // size of the spinner (used for both width and height)
+        border: '3px', // border-width of the spinner (shouldn't be bigger than half the spinner's size)
+        speed: '300ms', // the speed at which the spinner should rotate
+      },
+      // md: {
+      //   color: theme('colors.red.500', 'red'),
+      //   size: '2em',
+      //   border: '2px',
+      //   speed: '500ms',
+      // },
+    }),
     extend: {
       colors: {
         'brand': '#3A456E',
@@ -426,6 +440,7 @@ module.exports = {
     },
   },
   variants: {
+    spinner: ['responsive'],
     accessibility: ['responsive', 'focus'],
     alignContent: ['responsive'],
     alignItems: ['responsive'],
@@ -494,5 +509,7 @@ module.exports = {
     zIndex: ['responsive'],
   },
   corePlugins: {},
-  plugins: [],
+  plugins: [
+    require('tailwindcss-spinner')(), // no options to configure
+  ],
 }

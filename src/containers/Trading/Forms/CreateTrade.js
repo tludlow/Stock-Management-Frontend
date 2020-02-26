@@ -68,6 +68,8 @@ export default function CreateTrade() {
         <div className="flex flex-col items-center md:items-start">
             <h2 className="text-brand font-bold text-xl">Create a new trade</h2>
             <p>Insert the details for a derivative manually</p>
+            <hr className="my-2" />
+            <p className="text-center">If you choose to have a the trade type be a stock, the buying company is the stock you are buying.</p>
         </div>
 
         <form className="mt-8 w-11/12 p-4 mx-auto h-auto flex flex-col items-center bg-white shadow rounded-lg">
