@@ -13,11 +13,17 @@ export default function CreateTrade() {
     const [products, setProducts] = useState([]);
     const [currencies, setCurrencies] = useState([]);
     const [error, setError] = useState("");
+    const [formError, setFormError] = useState("");
+
+    const [sellingCompany, setSellingCompany] = useState(null);
+    const [buyingCompany, setBuyingCompany] = useState(null);
+    const [product, setProduct] = useState(null);
 
     useEffect(()=> {
         getCompaniesAndCurrenciesAndProducts();
     }, []);
 
+    //Gets products, companies and currencies from the backend so we can auto suggest these to the user
     const getCompaniesAndCurrenciesAndProducts = () => {
         setLoading(true);
         axios.all([
@@ -41,6 +47,37 @@ export default function CreateTrade() {
 
     }
 
+    const onDropdownChangeCompanies = (tag, event, values) => {
+        console.log(tag, values)
+        setFormError("")
+        if (tag === "selling-company") {
+            setSellingCompany(values)
+            if (values === null) {
+                setSellingCompany(null)
+                setProduct(null)
+                return;
+            }
+
+            //Update the products to notify the user that the stocks they could be buying would be for the selling comapny
+            let currentProducts = products;
+            if(products.length !== 0) {
+                currentProducts[0] = {id: -1, name: "Stocks (" + values.name + ")"}
+                setProducts(currentProducts)
+            }
+        }
+        if (tag === "buying-company") {
+            setBuyingCompany(values)
+        }
+    }
+    
+    const onDropdownChangeProduct = (event, values) => {
+        console.log(event, values)
+        setProduct(values)
+    }
+    /**
+     * VIEWS
+     */
+
     if (loading || error) {
         return (
             <>
@@ -48,7 +85,9 @@ export default function CreateTrade() {
                 <h2 className="text-brand font-bold text-xl">Create a new trade</h2>
                 <p>Insert the details for a derivative manually</p>
                 <hr className="my-2" />
-                <p className="text-center">If you choose to have a the trade type be a stock, the buying company is the stock you are buying.</p>
+                <p className="text-center">
+                    If you choose to have a the trade type be a stock, the buying company is the stock you are buying.
+                </p>
             </div>
             { error && 
                 <div className="">
@@ -69,20 +108,75 @@ export default function CreateTrade() {
             <h2 className="text-brand font-bold text-xl">Create a new trade</h2>
             <p>Insert the details for a derivative manually</p>
             <hr className="my-2" />
-            <p className="text-center">If you choose to have a the trade type be a stock, the buying company is the stock you are buying.</p>
+            <p className="text-center">
+                If you choose to have a the trade type be a stock, the buying company is the stock you are buying.
+            </p>
         </div>
 
         <form className="mt-8 w-11/12 p-4 mx-auto h-auto flex flex-col items-center bg-white shadow rounded-lg">
-                <label className="mb-4 text-brand text-md font-semibold" htmlFor="product-dropdown">Product Type</label>
+            
+            {/* Selling Company */}
+            <div className="mb-8">
+                <p className="mb-2 text-brand text-md font-semibold">Selling Company</p>
                 <Autocomplete
-                    id="combo-box-demo"
+                    id="selling-company-dropdown"
+                    name="selling-company-dropdown"
+                    options={companies}
+                    onChange={(event, values)=> onDropdownChangeCompanies("selling-company", event, values)}
+                    getOptionLabel={option => option.name}
+                    style={{ width: 300 }}
+                    renderInput={params => <TextField {...params} label="Selling Company" variant="outlined" />}
+                />
+            </div>
+
+            {/* Buying party */}
+            <div className="mb-8">
+                <p className="mb-2 text-brand text-md font-semibold">Buying Company</p>
+                <Autocomplete
+                    id="buying-company-dropdown"
+                    name="buying-company-dropdown"
+                    options={companies}
+                    onChange={(event, values)=> onDropdownChangeCompanies("buying-company", event, values)}
+                    getOptionLabel={option => option.name}
+                    style={{ width: 300 }}
+                    renderInput={params => <TextField {...params} label="Buying Company" variant="outlined" />}
+                />
+            </div>
+            
+            {/* Product being traded */}
+            <div className="mb-8">
+                <p className="mb-2 text-brand text-md font-semibold">Product Type</p>
+
+                {sellingCompany === null ?
+                <>
+                <p className="text-red-500 text-xs uppercase font-semibold tracking-wide">Please choose a selling company first</p>
+                <Autocomplete
+                    id="product-dropdown"
                     name="product-dropdown"
                     options={products}
+                    onChange={onDropdownChangeProduct}
+                    getOptionLabel={option => option.name}
+                    disabled
+                    style={{ width: 300 }}
+                    renderInput={params => <TextField {...params} label="Product" variant="outlined" />}
+                />
+                </>
+                :
+                <Autocomplete
+                    id="product-dropdown"
+                    name="product-dropdown"
+                    options={products}
+                    onChange={onDropdownChangeProduct}
                     getOptionLabel={option => option.name}
                     style={{ width: 300 }}
                     renderInput={params => <TextField {...params} label="Product" variant="outlined" />}
                 />
-                <button className="mx-auto mt-2 text-center px-3 py-2 rounded shadow bg-brand text-white uppercase font-semibold text-sm" type="submit">Create Trade</button>
+                }
+                
+            </div>
+            
+            {formError.length > 0 && <p className="mb-4 text-red-600 font-semibold text-md">Error! {formError}</p>}
+            <button className="mx-auto mt-2 text-center px-3 py-2 rounded shadow bg-brand text-white uppercase font-semibold text-sm" type="submit">Create Trade</button>
         </form>
         </>
     );
