@@ -40,22 +40,23 @@ export default function CreateTrade() {
     //Gets products, companies and currencies from the backend so we can auto suggest these to the user
     const getCompaniesAndCurrenciesAndProducts = () => {
         //Dont get new data for this if we already have it
-        if (companies.length !== 0 && products.length !== 0 && currencies.length !== 0) {
+        if (companies.length !== 0 && currencies.length !== 0) {
             return
         }
+
         setLoading(true);
         axios.all([
             api.get("/company/list"),
             api.get("/currency/list"),
-            api.get("/product/list")
-        ]).then(axios.spread((companyRes, currencyRes, productRes) => {
-            console.log(companyRes, currencyRes, productRes);
+            //api.get("/product/list")
+        ]).then(axios.spread((companyRes, currencyRes) => {
+            console.log(companyRes, currencyRes);
             setLoading(false);
             setCompanies(companyRes.data);
             setCurrencies(currencyRes.data);
 
             //Set the products to also include stocks at the top, this is a viable option not from the database
-            setProducts([{id: -1, name: "Stocks"}, ...productRes.data]);
+            //setProducts([{id: -1, name: "Stocks"}, ...productRes.data]);
             
         })).catch(err => {
             setError(err.message);
@@ -68,7 +69,22 @@ export default function CreateTrade() {
     const onDropdownChangeCompanies = (tag, event, values) => {
         console.log(tag, values)
         if (tag === "selling-company") {
+            //Reset the product when changing a seller, they may sell different products
+            setProduct(null)
+
             setSellingCompany(values)
+
+            //Get the products sold by this company
+            if(values !== null) {
+                api.get("/product/soldby/id=" + values.id).then(response => {
+                    console.log(response);
+                    setProducts([{id: -1, name: "Stocks (" + values.name + ")"}, ...response.data])
+                }).catch(err => {
+                    setError(err.message)
+                    return
+                });
+            }
+            
 
             //Check to delete the products before setting company to null, the products depend upon the selling company
             if (values === null) {
@@ -120,36 +136,61 @@ export default function CreateTrade() {
     }
 
     const verifyForm = (sellingCompany, buyingCompany, product, underlyingCurrency, notionalCurrency, maturityDate, quantity, strikePrice, underlyingPrice) => {
+        // console.log(sellingCompany, buyingCompany, product, underlyingCurrency, notionalCurrency, maturityDate, quantity, strikePrice, underlyingPrice)
         if (sellingCompany === null) {
             setFormError("Please enter a selling company")
+            return
         }
         if (buyingCompany === null) {
             setFormError("Please enter a buying company")
+            return
         }
         if(buyingCompany !== null && sellingCompany != null && buyingCompany.name === sellingCompany.name) {
+            console.log(sellingCompany.name, buyingCompany.name)
             setFormError("The buying and selling company should not be the same")
+            return
         }
         if(quantity < 1) {
             setFormError("The quantity should be greater than 0")
+            return
         }
         if(maturityDate === "") {
             setFormError("Please enter a maturity date")
+            return
         }
         if(product === null) {
             setFormError("Please enter a product being traded")
+            return
         }
         if(underlyingCurrency === null) {
             setFormError("Please enter an underlying currency")
+            return
         }
         if(notionalCurrency === null) {
             setFormError("Please enter a notional currency")
+            return
         }
         if(strikePrice < 0.01) {
             setFormError("Please enter a strike price")
+            return
         }
         if(underlyingPrice < 0.01) {
+            console.log(strikePrice)
             setFormError("Please enter an underlying price")
+            return
         }
+        setFormError("")    
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault()
+        //Cant submit if we have form errors
+        if(formError.length > 0) {
+            return
+        }
+        
+        console.log(sellingCompany, buyingCompany, product, underlyingCurrency, notionalCurrency, maturityDate, quantity, strikePrice, underlyingPrice)
+        console.log("submitting!")
     }
 
     /**
@@ -191,7 +232,7 @@ export default function CreateTrade() {
             </p>
         </div>
 
-        <form className="mt-8 w-11/12 p-4 mx-auto h-auto flex flex-col items-center bg-white shadow rounded-lg">
+        <form onSubmit={onSubmit} className="mt-8 w-11/12 p-4 mx-auto h-auto flex flex-col items-center bg-white shadow rounded-lg">
             
             {/* Selling Company */}
             <div className="mb-8">
@@ -226,29 +267,29 @@ export default function CreateTrade() {
                 <p className="mb-2 text-brand text-md font-semibold">Product Type</p>
 
                 {sellingCompany === null ?
-                <>
-                <p className="text-red-400 text-xs uppercase italic tracking-wide">Please choose a selling company first</p>
-                <Autocomplete
-                    id="product-dropdown"
-                    name="product-dropdown"
-                    options={products}
-                    onChange={onDropdownChangeProduct}
-                    getOptionLabel={option => option.name}
-                    disabled
-                    style={{ width: 300 }}
-                    renderInput={params => <TextField {...params} label="Product" variant="outlined" />}
-                />
-                </>
-                :
-                <Autocomplete
-                    id="product-dropdown"
-                    name="product-dropdown"
-                    options={products}
-                    onChange={onDropdownChangeProduct}
-                    getOptionLabel={option => option.name}
-                    style={{ width: 300 }}
-                    renderInput={params => <TextField {...params} label="Product" variant="outlined" />}
-                />
+                    <>
+                    <p className="text-gray-800 text-xs uppercase italic tracking-wide">Please choose a selling company first</p>
+                    <Autocomplete
+                        id="product-dropdown"
+                        name="product-dropdown"
+                        options={products}
+                        onChange={onDropdownChangeProduct}
+                        getOptionLabel={option => option.name}
+                        disabled
+                        style={{ width: 300 }}
+                        renderInput={params => <TextField {...params} label="Product" variant="outlined" />}
+                    />
+                    </>
+                    :
+                    <Autocomplete
+                        id="product-dropdown"
+                        name="product-dropdown"
+                        options={products}
+                        onChange={onDropdownChangeProduct}
+                        getOptionLabel={option => option.name}
+                        style={{ width: 300 }}
+                        renderInput={params => <TextField {...params} label="Product" variant="outlined" />}
+                    />
                 }
             </div>
 
