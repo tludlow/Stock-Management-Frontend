@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { Link } from "react-router";
+import { Link, browserHistory } from "react-router";
 
 export default function Main(props) {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <div className="main">
-            <header className="bg-brand shadow-lg sm:flex sm:justify-between sm:items-center sm:px-20 lg:px-64 sm:py-3">
-                <div className="flex items-center justify-between px-4 py-3 sm:p-0">
-                    <div>
-                        <h1 className="text-white font-bold text-2xl"><span className="text-blue-500">Group</span> 23</h1>
+        <div className="main bg-gray-100 subpixel-antialiased h-screen text-gray-800">
+            <header className="bg-brand shadow-lg sm:flex sm:justify-between sm:items-center sm:px-20 sm:py-1">
+                <div className="flex items-center justify-between px-4 py-1 sm:p-0">
+                    <div className="hover:cursor-pointer">
+                        <h1 onClick={()=> browserHistory.push("/")} className="text-white font-bold text-2xl hover:cursor-pointer"><span className="text-blue-400 hover:cursor-pointer">Group</span> 23</h1>
                     </div>
                     <div className="sm:hidden">
                     <button onClick={()=> setIsOpen(!isOpen)} type="button" className="block text-gray-500 hover:text-white focus:text-white focus:outline-none">
@@ -21,10 +21,9 @@ export default function Main(props) {
                     </div>
                 </div>
                 <nav className={`${isOpen ? 'block' : 'hidden'} px-2 pt-2 pb-4 sm:flex sm:p-0`}>
-                <Link onClick={()=> setIsOpen(false)} to="/" className="block px-3 py-2 text-white font-semibold rounded hover:bg-gray-800">Home</Link>
-                <Link onClick={()=> setIsOpen(false)} to="/trading" className="mt-1 block px-3 py-2 text-white font-semibold rounded hover:bg-gray-800 sm:mt-0 sm:ml-6">Trading</Link>
-                <Link onClick={()=> setIsOpen(false)} to="/reports" className="mt-1 block px-3 py-2 text-white font-semibold rounded hover:bg-gray-800 sm:mt-0 sm:ml-6">Reports</Link>
-                <Link onClick={()=> setIsOpen(false)} to="/learning" className="mt-1 block px-3 py-2 text-white font-semibold rounded hover:bg-gray-800 sm:mt-0 sm:ml-6">Learning</Link>
+                    <Link onClick={()=> setIsOpen(false)} to="/" className="block px-3 py-2 text-white font-semibold rounded hover:bg-gray-800">Home</Link>
+                    <Link onClick={()=> setIsOpen(false)} to="/trading" className="mt-1 block px-3 py-2 text-white font-semibold rounded hover:bg-gray-800 sm:mt-0 sm:ml-6">Trading</Link>
+                    <Link onClick={()=> setIsOpen(false)} to="/reports" className="mt-1 block px-3 py-2 text-white font-semibold rounded hover:bg-gray-800 sm:mt-0 sm:ml-6">Reports</Link>
                 </nav>
             </header>
             <div className="content container mx-auto mt-6 flex flex-col align-center md:justify-start text-gray-800">
