@@ -59,7 +59,9 @@ export default function DeleteTrade() {
             <>
                 <p className="text-red-800 font-bold text-xl">Error</p>
                 <p className="text-red-600">{error}</p>
-            </>}
+            </>
+        }
+        
         {justDeleted && <p className="text-green-600 font-semibold mb-4">Successfully deleted trade: {tradeID} </p>}
         <h2 className="text-brand text-2xl font-bold">Delete a Trade</h2>
         <p>Search for the ID of a trade you wish to delete</p>
@@ -75,7 +77,7 @@ export default function DeleteTrade() {
 
         {loading ? <div className="h-32 w-32 mx-auto spinner text-center"></div> : ""}
         
-        {error.length === 0 && tradeID.length > 0 && !justDeleted?
+        {error.length === 0 && !(trade instanceof Array) && !justDeleted ?
             <div className="w-8/12 mt-8 py-4 px-4 text-center rounded shadow bg-white">
                 <p><span className="font-bold">Trade ID</span>: {trade.id}</p>
                 <p><span className="font-bold">Product ID</span>: {trade.product}</p>
