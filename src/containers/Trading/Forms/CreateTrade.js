@@ -14,6 +14,8 @@ export default function CreateTrade() {
     const [currencies, setCurrencies] = useState([]);
     const [error, setError] = useState("");
     const [formError, setFormError] = useState("Please enter all of the trade information");
+    const [submitError, setSubmitError] = useState("")
+    const [submitLoading, setSubmitLoading] = useState(true)
 
     const [sellingCompany, setSellingCompany] = useState(null);
     const [buyingCompany, setBuyingCompany] = useState(null);
@@ -197,8 +199,26 @@ export default function CreateTrade() {
             return
         }
         
-        console.log(sellingCompany, buyingCompany, product, underlyingCurrency, notionalCurrency, maturityDate, quantity, strikePrice, underlyingPrice)
-        console.log("submitting!")
+        setSubmitLoading(true)
+        setSubmitError("")
+        api.post("/trade/create", {
+            "selling_party": sellingCompany.id,
+            "buying_party": buyingCompany.id,
+            "product": product.id,
+            "quantity": quantity,
+            "maturity_date": maturityDate,
+            "underlying_currency": underlyingCurrency.currency,
+            "notional_currency": notionalCurrency.currency,
+            "strike_price": strikePrice,
+            "underlying_price": underlyingPrice 
+        }).then(response => {
+            console.log(response);
+            setSubmitLoading(false)
+        }).catch(err => {
+            console.log(err);
+            setSubmitLoading(false)
+            setSubmitError(err.message)
+        })
     }
 
     /**
@@ -212,8 +232,8 @@ export default function CreateTrade() {
                 <h2 className="text-brand font-bold text-xl">Create a new trade</h2>
                 <p>Insert the details for a derivative manually</p>
                 <hr className="my-2" />
-                <p className="text-center">
-                    If you choose to have a the trade type be a stock, the buying company is the stock you are buying.
+                <p>
+                    If you are choosing the trade a Stock, this stock will be off the selling company. If you change the selling company after selecting the stock for a previously selected selling company you must reselect your product being traded.
                 </p>
             </div>
             { error && 
@@ -235,8 +255,8 @@ export default function CreateTrade() {
             <h2 className="text-brand font-bold text-xl">Create a new trade</h2>
             <p>Insert the details for a derivative manually</p>
             <hr className="my-2" />
-            <p className="text-center">
-                If you choose to have a the trade type be a stock, the buying company is the stock you are buying.
+            <p>
+                If you are choosing the trade a Stock, this stock will be off the selling company. If you change the selling company after selecting the stock for a previously selected selling company you must reselect your product being traded.
             </p>
         </div>
 
@@ -276,7 +296,7 @@ export default function CreateTrade() {
 
                 {sellingCompany === null ?
                     <>
-                    <p className="text-gray-800 text-xs uppercase italic tracking-wide">Please choose a selling company first</p>
+                    <p className="text-red-700">Please choose a selling company first</p>
                     <Autocomplete
                         id="product-dropdown"
                         name="product-dropdown"
@@ -342,6 +362,8 @@ export default function CreateTrade() {
                 <input onChange={maturityDateChange} min={new Date().toISOString().split('T')[0]} className="w-full py-4 px-6 rounded border hover:border-gray-600" type="date" name="maturity-date" id="maturity-date"/>
             </div>
             
+            {underlyingCurrency === null && <p className="mb-4 mt-4 text-red-800">Please enter an underlying currency before you enter the following details</p>}
+            
             {/* Underlying Price */}
             <div className="mb-8" style={{width: "300px"}}>
                 <p className="mb-2 text-brand text-md font-semibold">Underlying Price</p>
@@ -362,7 +384,7 @@ export default function CreateTrade() {
                 <button className="mx-auto mt-2 text-center px-3 py-2 rounded shadow bg-red-800 text-white uppercase font-semibold text-sm hover:cursor-not-allowed" type="submit"><i className="fas fa-ban"></i> Form Incomplete</button>
                 </>
                 :
-                <button className="mx-auto mt-2 text-center px-3 py-2 rounded shadow bg-brand text-white uppercase font-semibold text-sm" type="submit">Create Trade</button>
+                submitLoading ? <button className="mx-auto mt-2 text-center px-3 py-2 rounded shadow bg-brand text-white uppercase font-semibold text-sm" type="submit">Loading...</button> : <button className="mx-auto mt-2 text-center px-3 py-2 rounded shadow bg-brand text-white uppercase font-semibold text-sm" type="submit">Create Trade</button>
             }
             
             
