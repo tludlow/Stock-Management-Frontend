@@ -15,7 +15,7 @@ export default function CreateTrade() {
     const [error, setError] = useState("");
     const [formError, setFormError] = useState("Please enter all of the trade information");
     const [submitError, setSubmitError] = useState("")
-    const [submitLoading, setSubmitLoading] = useState(true)
+    const [submitLoading, setSubmitLoading] = useState(false)
 
     const [sellingCompany, setSellingCompany] = useState(null);
     const [buyingCompany, setBuyingCompany] = useState(null);
@@ -352,13 +352,14 @@ export default function CreateTrade() {
             {/* Quantity */}
             <div className="mb-8" style={{width: "300px"}}>
                 <p className="text-brand text-md font-semibold">Quantity</p>
-                <small className="mb-2">Minimum quantity is 1</small><br />
+                <small className="mb-2">Quantity must be a positive number, not including 0</small><br />
                 <input onChange={quantityChange} value={quantity} min="1" className="w-full py-4 px-6 rounded border hover:border-gray-600" type="number" name="quantity" id="quantity"/>
             </div>
 
             {/* Maturity Date */}
             <div className="mb-8" style={{width: "300px"}}>
                 <p className="mb-2 text-brand text-md font-semibold">Maturity Date</p>
+                <small>Maturity Dates must be in the future</small>
                 <input onChange={maturityDateChange} min={new Date().toISOString().split('T')[0]} className="w-full py-4 px-6 rounded border hover:border-gray-600" type="date" name="maturity-date" id="maturity-date"/>
             </div>
             
@@ -367,13 +368,20 @@ export default function CreateTrade() {
             {/* Underlying Price */}
             <div className="mb-8" style={{width: "300px"}}>
                 <p className="mb-2 text-brand text-md font-semibold">Underlying Price</p>
-                {underlyingCurrency === null ? <p>The current price per unit represented in the underlying currency</p> : <p>The current price per unit represented in the underlying currency:  {underlyingCurrency.currency}</p>}
+                <small>Underlying price must be a positive number (not 0)</small><br />
+                {underlyingCurrency === null ? <small>The current price per unit represented in the underlying currency</small> : <small>The current price per unit represented in the underlying currency:  {underlyingCurrency.currency}</small>}
                 <input disabled={underlyingCurrency === null} onChange={underlyingPriceChange} min={0.01} step=".01" className="w-full py-4 px-6 rounded border hover:border-gray-600" type="number" name="underlying-price" id="underlying-price"/>
             </div>
 
             {/* Stike Price */}
             <div className="mb-8" style={{width: "300px"}}>
                 <p className="mb-2 text-brand text-md font-semibold">Strike Price</p>
+                <small>Strike price must be a positive number (not 0)</small><br />
+                {underlyingCurrency === null ? <small>Strike price is represented in the underlying currency</small> : <small>Strike price is represented in the underlying currency:  {underlyingCurrency.currency}</small>}
+                <input disabled={underlyingCurrency === null} onChange={strikePriceChange} min={0.01} step=".01" className="w-full py-4 px-6 rounded border hover:border-gray-600" type="number" name="strike-price" id="strike-price"/>
+            </div>
+            
+            {submitError.length > 0 && <p className="text-red-700">An error occured when creating the request: {submitError}</p>}
                 {underlyingCurrency === null ? <p>Strike price is represented in the underlying currency</p> : <p>Strike price is represented in the underlying currency:  {underlyingCurrency.currency}</p>}
                 <input disabled={underlyingCurrency === null} onChange={strikePriceChange} min={0.01} step=".01" className="w-full py-4 px-6 rounded border hover:border-gray-600" type="number" name="strike-price" id="strike-price"/>
             </div>
