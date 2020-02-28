@@ -67,7 +67,7 @@ export default function Trading() {
         
         <div className="mt-6 flex flex-wrap justify-center md:justify-between w-auto">
             <Action title="Create a Trade" message="Insert a new trade’s data into the system manually" linkTo="/trading/create-trade" icon="create" />
-            <Action title="Edit a Trade" message="Update a trade that already exists to it’s new values" linkTo="/trading/edit-trade" icon="edit" />
+            <Action title="Find a Trade" message="Find a trade in the system to view, edit or delete" linkTo="/trading/find-trade" icon="find" />
             <Action title="Delete a Trade" message="Delete an already existing trade from the system" linkTo="/trading/delete-trade" icon="delete" />
         </div>
         
