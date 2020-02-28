@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { Link } from "react-router"
+import { browserHistory,  Link } from "react-router"
 
 import api from "../../../api";
 
@@ -24,7 +24,8 @@ export default function FindTrade() {
             if (response.data.length === 0) {
                 setSearchError("No trades exist with that ID")
             } else {
-                setTrade(response.data[0]);
+                // setTrade(response.data[0]);
+                browserHistory.push(`/trade/${tradeID}`)
             }
             
         }).catch(err => {

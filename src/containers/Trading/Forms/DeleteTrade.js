@@ -39,7 +39,7 @@ export default function DeleteTrade() {
 
     const deleteTrade = id => {
         setLoading(true);
-        api.post("/trade/delete",
+        api.post("/trade/delete/",
         {
             trade_id: id
         }).then(response => {

@@ -25,7 +25,6 @@ export default function Trading() {
             setError("");
             setLoading(false);
             setTrades(response.data);
-            console.log(trades);
         }).catch(err => {
             console.log(err);
             setError(err.message);
@@ -77,8 +76,9 @@ export default function Trading() {
                 <Link to="/trading/all" className="px-2 py-1 bg-brand rounded text-white uppercase font-semibold leading-normal text-xs hover:text-gray-300 hover:bg-indigo-700 cursor-pointer">View more</Link>
             </div>
             
-            {loading ? <div className="h-32 w-32 mx-auto spinner text-center"></div> : ""}
+            {loading ? <div className="h-32 w-32 mx-auto spinner text-center"></div> :
 
+            trades.length === 0 ? <p className="text-center text-brand font-semibold text-lg">No trades are in the system.</p> :
             <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                 {trades.map((trade, i) => (
                     <Trade
@@ -97,6 +97,7 @@ export default function Trading() {
                     />
                 ))}
             </div>
+            }
         </div>
         </>
     );
