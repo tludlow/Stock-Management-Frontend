@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-import CurrencyLine from "./CurrencyLine";
 import api from "../../api";
+import CurrencyLineDepreciation from './CurrencyLineDepreciation';
+import CurrencyLineAppreciation from './CurrencyLineAppreciation';
 
 export default function Home() {
     const [changeData, setChangeData] = useState(null)
@@ -49,7 +50,7 @@ export default function Home() {
                                 <span className="py-1 pl-2 text-green-500 font-bold">+ <span className="font-normal"></span>{currency.change}</span>
                             </p>
                             
-                            <CurrencyLine 
+                            <CurrencyLineAppreciation
                                 key={i}
                                 className="w-full h-full" 
                                 data={currency} 
@@ -75,7 +76,41 @@ export default function Home() {
                     <br className="block lg:hidden" /> <span className="lg:pl-2 text-gray-500 text-xs">(Past week)</span>
                     <p className="font-normal text-sm font-gray-600">The currencies which have seen the most decrease in value this week (against the dollar)</p>
                 </h3>
+
+                {changeError.length > 0 ? <p className="text-red-700">{changeError}</p> :
+                changeLoading ? <div className="h-24 w-24 mx-auto spinner text-center"></div> :
+                <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                    {changeData.largest_depreciations.map((currency, i) => (
+                        <div key={i} className="flex flex-col items-center bg-white p-2 rounded">
+                            <p className="flex jusitfy-center text-center">
+                                <span className="mb-2 font-bold text-lg text-center">{currency.currency}</span>
+                                <span className="py-1 pl-2 text-red-500 font-bold">- <span className="font-normal"></span>{currency.change}</span>
+                            </p>
+                            
+                            <CurrencyLineDepreciation
+                                key={i}
+                                className="w-full h-full" 
+                                data={currency} 
+                                day_one={changeData.day_one}
+                                day_two={changeData.day_two}
+                                day_three={changeData.day_three}
+                                day_four={changeData.day_four}
+                                day_five={changeData.day_five}
+                                day_six={changeData.day_six}
+                                day_seven={changeData.day_seven}
+                            />
+                        </div>
+                        
+                    ))}
+                </div>
+                
+                }
             </section>
+        
+            <section id="product-price-vs-volume">
+
+            </section>
+        
         </>
     );
 }
