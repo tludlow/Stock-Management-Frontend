@@ -36,17 +36,17 @@ export default function Home() {
                 <h3 className="text-brand text-lg lg:text-xl font-bold">
                     Most Appreciated Currencies
                     <br className="block lg:hidden" /> <span className="lg:pl-2 text-gray-500 text-xs">(Past week)</span>
-                    <p className="font-normal text-sm font-gray-600">The currencies which have seen the most increase in valuid (against the dollar)</p>
+                    <p className="font-normal text-sm font-gray-600">The currencies which have seen the most increase in value this week (against the dollar)</p>
                 </h3>
 
                 {changeError.length > 0 ? <p className="text-red-700">{changeError}</p> :
-                changeLoading ? <div className="h-32 w-32 mx-auto spinner text-center"></div> :
+                changeLoading ? <div className="h-24 w-24 mx-auto spinner text-center"></div> :
                 <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                     {changeData.largest_appreciations.map((currency, i) => (
                         <div key={i} className="flex flex-col items-center bg-white p-2 rounded">
                             <p className="flex jusitfy-center text-center">
-                                <p className="mb-2 font-bold text-lg text-center">{currency.currency}</p>
-                                <p className="py-1 pl-2 text-green-500 font-bold">+ <span className="font-normal"></span>{currency.change}</p>
+                                <span className="mb-2 font-bold text-lg text-center">{currency.currency}</span>
+                                <span className="py-1 pl-2 text-green-500 font-bold">+ <span className="font-normal"></span>{currency.change}</span>
                             </p>
                             
                             <CurrencyLine 
@@ -67,6 +67,14 @@ export default function Home() {
                 </div>
                 
                 }
+            </section>
+
+            <section id="most-depreciated" className="mt-16 mb-2 p-3">
+                <h3 className="text-brand text-lg lg:text-xl font-bold">
+                    Most Depreciated Currencies
+                    <br className="block lg:hidden" /> <span className="lg:pl-2 text-gray-500 text-xs">(Past week)</span>
+                    <p className="font-normal text-sm font-gray-600">The currencies which have seen the most decrease in value this week (against the dollar)</p>
+                </h3>
             </section>
         </>
     );

@@ -65,6 +65,8 @@ export default function CurrencyLine(props) {
     return (
         <div className="chart-container">
             <Line 
+                width={300}
+                height={80}
                 options={lineOptions} 
                 data={lineData} 
             />
