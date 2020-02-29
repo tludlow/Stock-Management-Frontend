@@ -389,10 +389,7 @@ export default function CreateTrade() {
             </div>
             
             {submitError.length > 0 && <p className="text-red-700">An error occured when creating the request: {submitError}</p>}
-                {underlyingCurrency === null ? <p>Strike price is represented in the underlying currency</p> : <p>Strike price is represented in the underlying currency:  {underlyingCurrency.currency}</p>}
-                <input disabled={underlyingCurrency === null} onChange={strikePriceChange} min={0.01} step=".01" className="w-full py-4 px-6 rounded border hover:border-gray-600" type="number" name="strike-price" id="strike-price"/>
-            </div>
-            
+                
             {formError.length > 0 ?
                 <>
                 <p className="mb-4 text-red-600 font-semibold text-md">Error! {formError}</p>
