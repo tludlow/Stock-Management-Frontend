@@ -4,7 +4,7 @@ import PDFDocument from "./PDFDocument";
 import moment from "moment";
 
 export default function Report(props) {
-    let date = moment(props.params.reportDate, "DD-MM-YYYY").format("dddd, MMMM Do YYYY")
+    let date = moment(props.params.reportDate, "YYYY-MM-DD").format("dddd, MMMM Do YYYY")
 
     let reportData = {
         date: props.params.reportDate,

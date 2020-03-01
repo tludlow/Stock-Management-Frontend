@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import moment from "moment";
 import { browserHistory } from "react-router";
 
@@ -9,19 +9,21 @@ export default function Reports() {
     let midnight = moment().endOf("day")
 
     let dates = [
-        {
-            date: "13-10-2020",
-        },
-        {
-            date: "14-10-2020",
-        },
-        {
-            date: "15-10-2020",
-        },
-        {
-            date: "16-10-2020",
-        }
+        {date: moment().subtract(0,'d').format('YYYY-MM-DD')},
+        {date: moment().subtract(1,'d').format('YYYY-MM-DD')},
+        {date: moment().subtract(2,'d').format('YYYY-MM-DD')},
+        {date: moment().subtract(3,'d').format('YYYY-MM-DD')},
+        {date: moment().subtract(4,'d').format('YYYY-MM-DD')},
+        {date: moment().subtract(6,'d').format('YYYY-MM-DD')},
+        {date: moment().subtract(7,'d').format('YYYY-MM-DD')},
+        {date: moment().subtract(8,'d').format('YYYY-MM-DD')},
+        {date: moment().subtract(9,'d').format('YYYY-MM-DD')},
+        {date: moment().subtract(10,'d').format('YYYY-MM-DD')},
+        {date: moment().subtract(11,'d').format('YYYY-MM-DD')},
+        {date: moment().subtract(12,'d').format('YYYY-MM-DD')},
+        {date: moment().subtract(13,'d').format('YYYY-MM-DD')},
     ]
+
 
    return (
         <>
@@ -32,10 +34,10 @@ export default function Reports() {
                 <p>Reports are generated here for the regulator. These reports contain:</p>
             </div>
             <div className="flex flex-col mt-4 sm:mt-0 items-start sm:items-end">
-                <p className="text-md">Search for a report by it's contents</p>
+                <p className="text-md">Search for a report by it's date, format is YYYY-MM-DD</p>
                 <form className="flex" action="">
                     <input className="px-2 py-1 rounded-l" type="text" placeholder="Search"/>
-                    <button className="px-4 py-1 bg-brand hover:bg-indigo-500 text-white rounded-r" type="submit">Go</button>
+                    <button className="px-4 py-1 bg-brand hover:bg-indigo-500 text-white rounded-r" type="submit">Find</button>
                 </form>
             </div>
         </div>
@@ -45,38 +47,37 @@ export default function Reports() {
 
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
 
-                {dates.map((date, index)=> (
-                    <div key={index} className="w-full flex flex-col items-center p-4 bg-white shadow-md rounded">
-                        <h4 className="mb-4 text-brand font-bold text-lg">{date.date}</h4>
-                        <p>Total Trades: 100</p>
-                        <div className="w-full mt-2 flex justify-around">
-                            <p>Edited Trades: 50</p>
-                            <p>Deleted Trades: 30</p>
-                        </div>
-                        <div className="w-full mt-4 flex flex-row justify-around">
-                            <div className="flex flex-col">
-                                <p className="text-green-500">Low Risk</p>
-                                <p className="text-center">20</p>
+                    {dates.map((date, index)=> (
+                        <div key={index} className="w-full flex flex-col items-center p-4 bg-white shadow-md rounded">
+                            <h4 className="text-brand font-bold text-lg">{date.date}</h4>
+                            {index === 0 ? <p className="mb-4">Today</p> : <p className="mb-4">{moment(date.date).fromNow()}</p>}
+                            <p>Total Trades: 100</p>
+                            <div className="w-full mt-2 flex justify-around">
+                                <p>Edited Trades: 50</p>
+                                <p>Deleted Trades: 30</p>
                             </div>
-                            <div className="flex flex-col">
-                                <p className="text-yellow-600">Medium Risk</p>
-                                <p className="text-center">35</p>
+                            <div className="w-full mt-4 flex flex-row justify-around">
+                                <div className="flex flex-col">
+                                    <p className="text-green-500">Low Risk</p>
+                                    <p className="text-center">20</p>
+                                </div>
+                                <div className="flex flex-col">
+                                    <p className="text-yellow-600">Medium Risk</p>
+                                    <p className="text-center">35</p>
+                                </div>
+                                <div className="flex flex-col">
+                                    <p className="text-red-600">High Risk</p>
+                                    <p className="text-center">4</p>
+                                </div>
                             </div>
-                            <div className="flex flex-col">
-                                <p className="text-red-600">High Risk</p>
-                                <p className="text-center">4</p>
+    
+                            <div className="mt-4 flex">
+                                <button onClick={()=> browserHistory.push(`/report/${date.date}`)} className="bg-brand mr-4 h-10 text-white px-2 py-1 rounded hover:shadow hover:bg-indigo-500">
+                                    Access Report
+                                </button>
                             </div>
                         </div>
-
-                        <div className="mt-4 flex">
-                            <button onClick={()=> browserHistory.push(`/report/${date.date}`)} className="bg-brand mr-4 h-10 text-white px-2 py-1 rounded hover:shadow hover:bg-indigo-500">
-                                Access Report
-                            </button>
-                        </div>
-                    </div>
-                ))}
-
-
+                    ))}
             </div>
         </div>
         
