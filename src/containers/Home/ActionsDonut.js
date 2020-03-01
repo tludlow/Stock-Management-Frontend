@@ -11,9 +11,9 @@ export default function ActionsDonut(props) {
         datasets: [{
             data: [props.data.creation_count, props.data.edit_count, props.data.delete_count],
             backgroundColor: [
-            '#1ec72c',
-            '#f0c024',
-            '#d14836'
+            "rgba(30, 199, 44, 0.85)",
+            'rgba(240, 192, 36, 0.85)',
+            'rgba(209, 72, 54, 0.85)'
             ],
             hoverBackgroundColor: [
             '#1ec72c',

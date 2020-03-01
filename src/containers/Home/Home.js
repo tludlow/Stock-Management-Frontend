@@ -135,9 +135,20 @@ export default function Home() {
                     
                     <div className="lg:w-2/5 bg-white p-4 mt-3 rounded shadow">
                         <div className="flex justify-center mt-2 mb-3">
-                            <p className="px-2 p-1 text-white bg-green-600 rounded">Creations: {actionsData.creation_count}</p>
-                            <p className="px-2 ml-4 mr-4 p-1 text-white bg-yellow-600 rounded">Edits: {actionsData.edit_count}</p>
-                            <p className="px-2 p-1 text-white bg-red-600 rounded">Deletions: {actionsData.delete_count}</p>
+                            <div className="flex flex-col items-center">
+                                <p className="px-2 p-1 text-white bg-green-600 rounded">Creations</p>
+                                <p className="font-bold">{actionsData.creation_count}</p>
+                            </div>
+
+                            <div className="flex flex-col items-center">
+                                <p className="px-2 ml-4 mr-4 p-1 text-white bg-yellow-600 rounded">Edits</p>
+                                <p className="font-bold">{actionsData.edit_count}</p>
+                            </div>
+
+                            <div className="flex flex-col items-center">
+                                <p className="px-2 p-1 text-white bg-red-600 rounded">Deletions</p>
+                                <p className="font-bold">{actionsData.delete_count}</p>
+                            </div>
                         </div>
                         <ActionsDonut className="mt-2" data={actionsData}/>
                     </div>
