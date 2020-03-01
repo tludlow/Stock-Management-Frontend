@@ -3,15 +3,21 @@ import React, { useState, useEffect } from 'react';
 import api from "../../api";
 import CurrencyLineDepreciation from './CurrencyLineDepreciation';
 import CurrencyLineAppreciation from './CurrencyLineAppreciation';
+import ActionsDonut from "./ActionsDonut";
 
 export default function Home() {
     const [changeData, setChangeData] = useState(null)
     const [changeLoading, setChangeLoading] = useState(true)
     const [changeError, setChangeError] = useState("")
 
+    const [actionsData, setActionsData] = useState(null)
+    const [actionsLoading, setActionsLoading] = useState(true)
+    const [actionsError, setActionsError] = useState("")
+
     useEffect(()=> {
         document.title = "Home - CS261 Group 23";
         getChangeData()
+        getActionsToday()
     }, []);
 
     const getChangeData = () => {
@@ -22,6 +28,17 @@ export default function Home() {
         }).catch(error => {
             setChangeError("Error collecting data, try refreshing the page")
             setChangeLoading(false)
+        })
+    }
+
+    const getActionsToday = () => {
+        setActionsLoading(true)
+        api.get("/report/actions/today").then(response => {
+            setActionsData(response.data)
+            setActionsLoading(false)
+        }).catch(error => {
+            setActionsError("Error getting actions data for today")
+            setActionsLoading(false)
         })
     }
 
@@ -106,7 +123,30 @@ export default function Home() {
                 
                 }
             </section>
-        
+                
+            <section id="actions-today" className="mt-16 mb-2 p-3">
+                <h3 className="text-brand text-lg lg:text-xl font-bold">Actions Today</h3>
+                {actionsError.length > 0 ?
+                    <p className="text-red-700">{actionsError}</p>
+                :
+                actionsLoading ? <div className="h-24 w-24 mx-auto spinner text-center"></div> :
+                <div className="">
+                    <p>The number of creations, trade attribute edits and deletions made today</p>
+                    
+                    <div className="lg:w-2/5 bg-white p-4 mt-3 rounded shadow">
+                        <div className="flex justify-center mt-2 mb-3">
+                            <p className="px-2 p-1 text-white bg-green-600 rounded">Creations: {actionsData.creation_count}</p>
+                            <p className="px-2 ml-4 mr-4 p-1 text-white bg-yellow-600 rounded">Edits: {actionsData.edit_count}</p>
+                            <p className="px-2 p-1 text-white bg-red-600 rounded">Deletions: {actionsData.delete_count}</p>
+                        </div>
+                        <ActionsDonut className="mt-2" data={actionsData}/>
+                    </div>
+                </div>
+                    
+                }
+                
+            </section>
+
             <section id="product-price-vs-volume">
 
             </section>
