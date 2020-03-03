@@ -49,13 +49,13 @@ export default function Reports() {
         <div className="p-4 sm:p-0 mt-8">
             <h3 className="text-brand text-xl font-bold mb-4">Recent Reports</h3>
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-4">
 
                     {dates.map((date, index)=> (
                         <div key={index} className="w-full flex flex-col items-center p-4 bg-white shadow-md rounded">
                             <h4 className="text-brand font-bold text-lg">{date.date}</h4>
                             {index === 0 ? <p className="mb-4">Today</p> : <p className="mb-4">{moment(date.date).fromNow()}</p>}
-                            <p>Total Trades: 100</p>
+                            {/* <p>Total Trades: 100</p>
                             <div className="w-full mt-2 flex justify-around">
                                 <p>Edited Trades: 50</p>
                                 <p>Deleted Trades: 30</p>
@@ -73,7 +73,7 @@ export default function Reports() {
                                     <p className="text-red-600">High Risk</p>
                                     <p className="text-center">4</p>
                                 </div>
-                            </div>
+                            </div> */}
     
                             <div className="mt-4 flex">
                                 <button onClick={()=> browserHistory.push(`/report/${date.date}`)} className="bg-brand mr-4 h-10 text-white px-2 py-1 rounded hover:shadow hover:bg-indigo-500">
