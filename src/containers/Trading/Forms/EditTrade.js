@@ -76,8 +76,23 @@ export default function EditTrade(props) {
             }
         }).catch(err => {
             console.log(err.response);
-            setLoading(false)
             setError(err.response.data.error)
+            api.get("/trade/id=" + props.params.tradeID).then(response => {
+                setLoading(false);
+    
+                console.log(response);
+                if (response.data.length === 0) {
+                    setError("No trades exist with that ID")
+                } else {
+                    setTrade(response.data[0]);
+                }
+                
+            }).catch(err => {
+                console.log(err);
+                setLoading(false);
+                setError(err.message);
+            });
+
         })
     }
     

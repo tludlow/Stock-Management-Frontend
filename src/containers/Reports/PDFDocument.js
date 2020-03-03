@@ -46,19 +46,24 @@ export default function PDFDocument(props) {
             <Page style={styles.page}>
                 <Text style={styles.title}>{date}</Text>
                 <View style={styles.infoRow}>
-                    <Text>New Trades: {props.data.newTradeCount}</Text>
-                    <Text >Edited Trades: {props.data.editedTradeCount}</Text>
-                    <Text>Deleted Trades: {props.data.deletedTradeCount}</Text>
-                </View>
-                <View style={styles.infoRow}>
-                    <Text>Erroneous Trades: {props.data.erroneousTradeCount}</Text>
-                    <Text>User Corrected Trades: {props.data.userCorrectionsCount}</Text>
-                    <Text>System Corrected Trades: {props.data.systemCorrectionsCount}</Text>
+                    <Text>New Trades: {props.data.num_of_new_trades}</Text>
+                    <Text >Edited Trades: {props.data.num_of_edited_trades}</Text>
+                    <Text>Deleted Trades: {props.data.num_of_deleted_trades}</Text>
                 </View>
 
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>New Trades</Text>
-                    <Text>Trades which have been created today in the system</Text>
+                    <Text>New trades entered into the system today</Text>
+                </View>
+
+                <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>Edited Trades</Text>
+                    <Text>Trades which have had their attributes edited today</Text>
+                </View>
+
+                <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>Deleted Trades</Text>
+                    <Text>Trades which have been deleted today</Text>
                 </View>
 
             </Page>
