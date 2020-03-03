@@ -131,10 +131,10 @@ export default function Home() {
                 :
                 actionsLoading ? <div className="h-24 w-24 mx-auto spinner text-center"></div> :
                 <div className="">
-                    <p>The number of creations, trade attribute edits and deletions made today</p>
+                    <p>The number of new trades created, trades edited, trades deleted, trade fields identified as erroneous and trade fields corrected today.</p>
                     
-                    <div className="lg:w-2/5 bg-white p-4 mt-3 rounded shadow">
-                        <div className="flex justify-center mt-2 mb-3">
+                    <div className="lg:w-3/5 bg-white p-4 mt-3 rounded shadow">
+                        <div className="flex justify-center flex-wrap mt-2 mb-3">
                             <div className="flex flex-col items-center">
                                 <p className="px-2 p-1 text-white bg-green-600 rounded">Creations</p>
                                 <p className="font-bold">{actionsData.creation_count}</p>
@@ -146,9 +146,20 @@ export default function Home() {
                             </div>
 
                             <div className="flex flex-col items-center">
-                                <p className="px-2 p-1 text-white bg-red-600 rounded">Deletions</p>
+                                <p className="px-2 ml-4 p-1 text-white bg-red-600 rounded">Deletions</p>
                                 <p className="font-bold">{actionsData.delete_count}</p>
                             </div>
+
+                            <div className="mt-4 md:mt-0 flex flex-col items-center">
+                                <p className="px-2 p-1 ml-4 text-white rounded" style={{backgroundColor: '#4263f5'}}>Erroneous Fields</p>
+                                <p className="font-bold">{actionsData.erroneous_fields}</p>
+                            </div>
+
+                            <div className="mt-4 md:mt-0 flex flex-col items-center">
+                                <p className="px-2 p-1 ml-4 text-white rounded" style={{backgroundColor: '#d142f5'}}>Corrections</p>
+                                <p className="font-bold">{actionsData.corrections}</p>
+                            </div>
+                            
                         </div>
                         <ActionsDonut className="mt-2" data={actionsData}/>
                     </div>

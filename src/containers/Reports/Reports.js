@@ -24,6 +24,10 @@ export default function Reports() {
         {date: moment().subtract(13,'d').format('YYYY-MM-DD')},
     ]
 
+    useEffect(()=> {
+        document.title = "CS261 - Reports"
+    }, [])
+
 
    return (
         <>

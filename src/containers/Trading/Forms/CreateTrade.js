@@ -399,9 +399,6 @@ export default function CreateTrade() {
                 submitLoading ? <button className="mx-auto mt-2 text-center px-3 py-2 rounded shadow bg-brand text-white uppercase font-semibold text-sm" type="submit">Loading...</button> : <button className="mx-auto mt-2 text-center px-3 py-2 rounded shadow bg-brand text-white uppercase font-semibold text-sm" type="submit">Create Trade</button>
             }
             
-            
-
-            
         </form>
         </>
     );

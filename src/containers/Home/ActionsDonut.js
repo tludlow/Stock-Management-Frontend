@@ -6,19 +6,25 @@ export default function ActionsDonut(props) {
         labels: [
             'Creations',
             'Edits',
-            'Deletions'
+            'Deletions',
+            "Erroneous Trade Attributes",
+            "Corrections"
         ],
         datasets: [{
-            data: [props.data.creation_count, props.data.edit_count, props.data.delete_count],
+            data: [props.data.creation_count, props.data.edit_count, props.data.delete_count, props.data.erroneous_fields, props.data.corrections],
             backgroundColor: [
             "rgba(30, 199, 44, 0.85)",
             'rgba(240, 192, 36, 0.85)',
-            'rgba(209, 72, 54, 0.85)'
+            'rgba(209, 72, 54, 0.85)',
+            'rgba(66, 99, 245, 0.85)',
+            'rgba(209, 66, 245, 0.85)'
             ],
             hoverBackgroundColor: [
             '#1ec72c',
             '#f0c024',
-            '#d14836'
+            '#d14836',
+            '#4263f5',
+            '#d142f5'
             ]
         }]
     };

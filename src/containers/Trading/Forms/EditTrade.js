@@ -101,7 +101,7 @@ export default function EditTrade(props) {
                     <p><span className="font-bold">Selling Party</span>: {trade.selling_party}</p>
                     <p><span className="font-bold">Notional Currency</span>: {trade.notional_currency}</p>
                     <p><span className="font-bold">Underlying Currency</span>: {trade.underlying_currency}</p>
-
+                    
                 </div>
             <form onSubmit={submit} className="mt-8 w-11/12 p-4 mx-auto h-auto flex flex-col justify-center items-center bg-white shadow rounded-lg" action="">
                 <div className="flex flex-col items-center">
