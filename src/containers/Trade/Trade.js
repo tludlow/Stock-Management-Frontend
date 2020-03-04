@@ -10,14 +10,21 @@ export default function Trade(props) {
 
     useEffect(()=> {
         api.get("/trade/id=" + props.params.tradeID).then(response => {
-            console.log(response);
-            setTrade(response.data[0]);
-            setLoading(false);
-            setError("");
+            if(response.data.length === 0) {
+                console.log("woew")
+                setTrade({});
+                setLoading(false);
+                setError("No trade exists with that id."); 
+            } else {
+                console.log(response);
+                setTrade(response.data[0]);
+                setLoading(false);
+                setError("");
+            }
         }).catch(err => {
             console.log(err);
-            setLoading(false);
             setError(err.message);
+            setLoading(false);
         });
     }, []);
 
@@ -30,7 +37,16 @@ export default function Trade(props) {
         );
     }
 
-    if (error.length > 0 || trade === null || props.params.tradeID === "undefined") {
+    if(error.length > 0) {
+        return (
+            <>  
+            <h2 className="mt-12 text-xl text-center">Error loading trade: <strong>{props.params.tradeID}</strong></h2>
+            <p className=" mt-2 text-red-700 text-center">{error}</p>
+            </>
+        );
+    }
+
+    if (trade === null || props.params.tradeID === "undefined") {
         return (
             <>  
             <h2 className="mt-12 text-xl text-center">Error loading trade: <strong>{props.params.tradeID}</strong></h2>

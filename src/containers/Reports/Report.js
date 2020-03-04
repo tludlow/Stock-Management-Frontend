@@ -148,7 +148,7 @@ export default function Report(props) {
                         <p>Trades which the user has edited on this day, with a description of each edit</p>
 
                         <div className="mt-3">
-                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                 {reportData.edited_trades.map((edited_trade, index)=> (
                                     <div className="bg-white rounded shadow p-4 mb-3 flex justify-around" key={index}>
                                         <div className="">
@@ -195,7 +195,7 @@ export default function Report(props) {
 
                                 <tbody>
                                     {reportData.deleted_trades.map((deleted_trade, index)=> (
-                                        <tr className="bg-white">
+                                        <tr key={index} className="bg-white">
                                             <td className="border px-4 py-2 text-center">{deleted_trade.trade.id}</td>
                                             <td className="border px-4 py-2 text-center">{deleted_trade.trade.buying_party}</td>
                                             <td className="border px-4 py-2 text-center">{deleted_trade.trade.selling_party}</td>
