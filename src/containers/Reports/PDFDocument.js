@@ -73,9 +73,9 @@ export default function PDFDocument(props) {
         }
     }
 
-    var created_trades = props.data.created_trades.map(function(trade){
+    var created_trades = props.data.created_trades.map(function(trade, idx){
         return (
-            <View>
+            <View key={idx}>
                 <Text>• {trade.id}</Text>
                 <Text style={styles.padLeft}>Buying Company: {trade.buying_party}</Text>
                 <Text style={styles.padLeft}>Selling Company: {trade.selling_party}</Text>
@@ -90,16 +90,16 @@ export default function PDFDocument(props) {
         );
     });
 
-    var deleted_trades = props.data.deleted_trades.map(function(trade){
-        return (<Text>• {trade.trade.id}</Text>);
+    var deleted_trades = props.data.deleted_trades.map(function(trade, idx){
+        return (<Text  key={idx}>• {trade.trade.id}</Text>);
     });
 
-    var edited_trades = props.data.edited_trades.map(function(trade){
+    var edited_trades = props.data.edited_trades.map(function(trade, idx){
         return (
-            <View>
+            <View key={idx}>
                 <Text>• {trade.trade.id}</Text>
-                {trade.edits.map(function(edit) {
-                    return (<Text style={styles.padLeft}><Text style={styles.borderingSide}>{prettyifyAttribute(edit.attribute_edited)}</Text>  <Text style={styles.red}>{edit.old_value}</Text> -->  <Text style={styles.green}>{edit.new_value}</Text></Text>)
+                {trade.edits.map(function(edit, idx) {
+                    return (<Text key={idx} style={styles.padLeft}><Text style={styles.borderingSide}>{prettyifyAttribute(edit.attribute_edited)}</Text>  <Text style={styles.red}>{edit.old_value}</Text> -->  <Text style={styles.green}>{edit.new_value}</Text></Text>)
                 })}
             </View>
         );

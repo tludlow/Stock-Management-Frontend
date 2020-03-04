@@ -30,6 +30,8 @@ import FourOFour from "./containers/FourOFour";
 //Load state and browser history so we can use it in react-router
 import store, {history} from './store';
 
+import Corrections from './containers/Corrections/Corrections';
+
 
 //render the react app, in the structure provided by react-router into the index.html root element
 render(
@@ -47,6 +49,8 @@ render(
 
                 <Route path="/reports" component={Reports} />
                 <Route path="/report/:reportDate" component={Report} />
+
+                <Route path="/corrections" component={Corrections} />
 
                 <Route path="/*" component={FourOFour} />
             </Route>
