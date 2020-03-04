@@ -20,13 +20,23 @@ export default function Report(props) {
     useEffect(()=> {
         document.title = `CS261 - Report: ${year}-${month}-${day}`
         api.get(`/report/year=${year}&month=${month}&day=${day}/`).then(response => {
-            console.log(response)
-            setReportData(response.data)
-            setLoading(false)
+            if(response.status === 400) {
+                setError("A report for this date doesnt exist")
+                setLoading(false)
+            } else {
+                setReportData(response.data)
+                setLoading(false)
+            }
         }).catch(error => { 
-            setError(error.message)
-            setLoading(false)
-            console.log(error)
+            if (error.response.status === 400) {
+                setError("A report for this day does not exist.")
+                setLoading(false)
+                console.log(error)
+            } else {
+                setError(error.message)
+                setLoading(false)
+                console.log(error)
+            }
         })
     }, [])
 
@@ -120,7 +130,7 @@ export default function Report(props) {
 
                                 <tbody>
                                     {reportData.created_trades.map((created_trade, index)=> (
-                                        <tr className="bg-white">
+                                        <tr className="bg-white" key={index}>
                                             <td className="border px-4 py-2 text-center">{created_trade.id}</td>
                                             <td className="border px-4 py-2 text-center">{created_trade.buying_party}</td>
                                             <td className="border px-4 py-2 text-center">{created_trade.selling_party}</td>

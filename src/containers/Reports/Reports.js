@@ -8,6 +8,8 @@ export default function Reports() {
     //The end of this day, which is midnight, which is when the next report is generated,
     let midnight = moment().endOf("day")
 
+    const [searchDate, setSearchDate] = useState("")
+
     let dates = [
         {date: moment().subtract(0,'d').format('YYYY-MM-DD')},
         {date: moment().subtract(1,'d').format('YYYY-MM-DD')},
@@ -28,6 +30,22 @@ export default function Reports() {
         document.title = "CS261 - Reports"
     }, [])
 
+    const changeReportDate = (event) => {
+        setSearchDate(event.target.value)
+    }
+
+    const submit = (e) => {
+        e.preventDefault();
+        if (searchDate === "") {
+            return
+        }
+        let dateRE = /(0\d{1}|1[0-2])\/([0-2]\d{1}|3[0-1])\/(19|20)\d{2}/
+
+        if (!searchDate.match(dateRE)) {
+            //Valid string
+            browserHistory.push(`/report/${searchDate}`)
+        }
+    }
 
    return (
         <>
@@ -39,8 +57,8 @@ export default function Reports() {
             </div>
             <div className="flex flex-col mt-4 sm:mt-0 items-start sm:items-end">
                 <p className="text-md">Search for a report by it's date, format is YYYY-MM-DD</p>
-                <form className="flex" action="">
-                    <input className="px-2 py-1 rounded-l" type="text" placeholder="Search"/>
+                <form onSubmit={submit} className="flex mt-2" action="">
+                    <input onChange={changeReportDate} className="px-2 py-1 rounded-l" type="text" placeholder="2020-03-18"/>
                     <button className="px-4 py-1 bg-brand hover:bg-indigo-500 text-white rounded-r" type="submit">Find</button>
                 </form>
             </div>
