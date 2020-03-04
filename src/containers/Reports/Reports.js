@@ -42,8 +42,15 @@ export default function Reports() {
         let dateRE = /(0\d{1}|1[0-2])\/([0-2]\d{1}|3[0-1])\/(19|20)\d{2}/
 
         if (!searchDate.match(dateRE)) {
-            //Valid string
-            browserHistory.push(`/report/${searchDate}`)
+            let searchedDate = new Date(searchDate)
+            if (searchedDate > new Date()) {
+                //Is in the future, we dont want this.
+                return
+            } else {
+                //Valid string
+                browserHistory.push(`/report/${searchDate}`)
+            }
+            
         }
     }
 
