@@ -17,6 +17,10 @@ export default function TradingAll() {
     const [trades, setTrades] = useState([])
 
     const changePage = (button) => {
+        if(loading) {
+            return;
+        }
+        
         if(button === "previous" && page === 1) {
             setPage(1)
         }
