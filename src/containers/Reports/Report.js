@@ -28,15 +28,10 @@ export default function Report(props) {
                 setLoading(false)
             }
         }).catch(error => { 
-            if (error.response.status === 400) {
-                setError("A report for this day does not exist.")
-                setLoading(false)
-                console.log(error)
-            } else {
-                setError(error.message)
-                setLoading(false)
-                console.log(error)
-            }
+            setError(error.message)
+            setLoading(false)
+            console.log(error)
+
         })
     }, [])
 

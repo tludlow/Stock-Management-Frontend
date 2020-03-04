@@ -11,7 +11,7 @@ export default function TradingAll() {
     let date = new Date()
 
     const [page, setPage] = useState(1)
-    const [totalTrades, setTotalTrades] = useState(-1)
+    const [totalTrades, setTotalTrades] = useState(2)
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(true)
     const [trades, setTrades] = useState([])
@@ -20,7 +20,7 @@ export default function TradingAll() {
         if(loading) {
             return;
         }
-        
+
         if(button === "previous" && page === 1) {
             setPage(1)
         }
