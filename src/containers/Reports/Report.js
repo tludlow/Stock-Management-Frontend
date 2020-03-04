@@ -39,19 +39,15 @@ export default function Report(props) {
         switch (name) {
             case 'underlying_price':
                 return "Underlying Price"
-                break;
             case 'strike_price':
                 return "Strike Price"
-                break;
             case 'quantity':
                 return "Quantity"
-                break;
             case 'maturity_date':
                 return "Maturity Date"
-                break;
         
             default:
-                break;
+                return "None"
         }
     }
 

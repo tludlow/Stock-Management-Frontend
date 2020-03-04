@@ -95,6 +95,12 @@ export default function EditTrade(props) {
 
         })
     }
+
+    if (loading) {
+        return (
+            <div className="h-32 w-32 mx-auto spinner text-center"></div>
+        )
+    }
     
     return (
         <>
