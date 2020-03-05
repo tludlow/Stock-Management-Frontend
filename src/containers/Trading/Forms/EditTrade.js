@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from "../../../api";
 
-
 export default function EditTrade(props) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
