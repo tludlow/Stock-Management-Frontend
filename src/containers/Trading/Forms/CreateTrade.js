@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import { browserHistory } from "react-router";
 
 import api from "../../../api.js";
 import axios from "axios";
@@ -16,6 +17,7 @@ export default function CreateTrade() {
     const [formError, setFormError] = useState("Please enter all of the trade information");
     const [submitError, setSubmitError] = useState("")
     const [submitLoading, setSubmitLoading] = useState(false)
+    const [submitStatus, setSubmitStatus] = useState("")
 
     const [sellingCompany, setSellingCompany] = useState(null);
     const [buyingCompany, setBuyingCompany] = useState(null);
@@ -78,7 +80,7 @@ export default function CreateTrade() {
 
             //Get the products sold by this company
             if(values !== null) {
-                api.get("/product/soldby/id=" + values.id).then(response => {
+                api.get("/product/soldby/company_id=" + values.id).then(response => {
                     console.log(response);
                     setProducts([{id: -1, name: "Stocks (" + values.name + ")"}, ...response.data])
                 }).catch(err => {
@@ -171,10 +173,10 @@ export default function CreateTrade() {
             setFormError("Please enter a notional currency")
             return
         }
-        if(underlyingCurrency !== null && notionalCurrency != null && notionalCurrency.currency === underlyingCurrency.currency) {
-            setFormError("The underlying and notional currencies should be different")
-            return
-        }
+        // if(underlyingCurrency !== null && notionalCurrency != null && notionalCurrency.currency === underlyingCurrency.currency) {
+        //     setFormError("The underlying and notional currencies should be different")
+        //     return
+        // }
         if(strikePrice < 0.01) {
             setFormError("Please enter a strike price")
             return
@@ -201,7 +203,8 @@ export default function CreateTrade() {
         
         setSubmitLoading(true)
         setSubmitError("")
-        api.post("/trade/create", {
+        setSubmitStatus("")
+        api.post("/trade/create/", {
             "selling_party": sellingCompany.id,
             "buying_party": buyingCompany.id,
             "product": product.id,
@@ -214,6 +217,10 @@ export default function CreateTrade() {
         }).then(response => {
             console.log(response);
             setSubmitLoading(false)
+            if (response.status === 200) {
+                setSubmitStatus("Trade successfully created.")
+                browserHistory.push(`/trade/${response.data.trade_id}`)
+            }
         }).catch(err => {
             console.log(err);
             setSubmitLoading(false)
@@ -382,10 +389,7 @@ export default function CreateTrade() {
             </div>
             
             {submitError.length > 0 && <p className="text-red-700">An error occured when creating the request: {submitError}</p>}
-                {underlyingCurrency === null ? <p>Strike price is represented in the underlying currency</p> : <p>Strike price is represented in the underlying currency:  {underlyingCurrency.currency}</p>}
-                <input disabled={underlyingCurrency === null} onChange={strikePriceChange} min={0.01} step=".01" className="w-full py-4 px-6 rounded border hover:border-gray-600" type="number" name="strike-price" id="strike-price"/>
-            </div>
-            
+                
             {formError.length > 0 ?
                 <>
                 <p className="mb-4 text-red-600 font-semibold text-md">Error! {formError}</p>
@@ -394,9 +398,6 @@ export default function CreateTrade() {
                 :
                 submitLoading ? <button className="mx-auto mt-2 text-center px-3 py-2 rounded shadow bg-brand text-white uppercase font-semibold text-sm" type="submit">Loading...</button> : <button className="mx-auto mt-2 text-center px-3 py-2 rounded shadow bg-brand text-white uppercase font-semibold text-sm" type="submit">Create Trade</button>
             }
-            
-            
-
             
         </form>
         </>

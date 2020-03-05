@@ -24,6 +24,7 @@ export default function Main(props) {
                     <Link onClick={()=> setIsOpen(false)} to="/" className="block px-3 py-2 text-white font-semibold rounded hover:bg-gray-800">Home</Link>
                     <Link onClick={()=> setIsOpen(false)} to="/trading" className="mt-1 block px-3 py-2 text-white font-semibold rounded hover:bg-gray-800 sm:mt-0 sm:ml-6">Trading</Link>
                     <Link onClick={()=> setIsOpen(false)} to="/reports" className="mt-1 block px-3 py-2 text-white font-semibold rounded hover:bg-gray-800 sm:mt-0 sm:ml-6">Reports</Link>
+                    <Link onClick={()=> setIsOpen(false)} to="/corrections" className="mt-1 block px-3 py-2 text-white font-semibold rounded hover:bg-gray-800 sm:mt-0 sm:ml-6">Errors / Corrections</Link>
                 </nav>
             </header>
             <div className="content container mx-auto mt-6 flex flex-col align-center md:justify-start text-gray-800">

@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import api from "../../../api.js";
 
-
-export default function DeleteTrade() {
+export default function DeleteTrade(props) {
 
     const [loading, setLoading] = useState(false);
     const [tradeID, setTradeID] = useState("");
     const [trade, setTrade] = useState([]);
     const [error, setError] = useState("");
     const [justDeleted, setJustDeleted] = useState(false);
+
+    useEffect(()=> {
+        if (props.params.tradeID !== undefined){
+            getTrade(props.params.tradeID)
+        }
+    }, [])
 
     const submit = e => {
         e.preventDefault();
@@ -39,7 +44,7 @@ export default function DeleteTrade() {
 
     const deleteTrade = id => {
         setLoading(true);
-        api.post("/trade/delete",
+        api.post("/trade/delete/",
         {
             trade_id: id
         }).then(response => {

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
 import api from "../../../api";
-
 
 export default function EditTrade(props) {
     const [loading, setLoading] = useState(true);
@@ -58,22 +56,49 @@ export default function EditTrade(props) {
         setChanges(null)
         setStatus("")
         setError("")
-        api.post("/trade/edit", trade).then(response => {
+
+        //Add a new field which the backend requires for the trade id.
+        let updatedTradeObj = trade.trade_id = trade.id
+        setTrade(updatedTradeObj)
+
+        api.post("/trade/edit/", trade).then(response => {
             console.log(response);
             setLoading(false)
             if (response.data.message !== undefined) {
                 setStatus("SUCCESS! No changes were made, all of the fields are the same")
             }
             if (response.data.changes !== undefined) {
-                setStatus("SUCCESS! Trade Updated, new details appear below.")
+                setStatus("SUCCESS! Trade Updated, new details are below.")
                 setChanges(response.data.changes)
                 setTrade(response.data.trade[0])
+
             }
         }).catch(err => {
             console.log(err.response);
-            setLoading(false)
-            setError(err.message)
+            setError(err.response.data.error)
+            api.get("/trade/id=" + props.params.tradeID).then(response => {
+                setLoading(false);
+    
+                console.log(response);
+                if (response.data.length === 0) {
+                    setError("No trades exist with that ID")
+                } else {
+                    setTrade(response.data[0]);
+                }
+                
+            }).catch(err => {
+                console.log(err);
+                setLoading(false);
+                setError(err.message);
+            });
+
         })
+    }
+
+    if (loading) {
+        return (
+            <div className="h-32 w-32 mx-auto spinner text-center"></div>
+        )
     }
     
     return (
@@ -81,12 +106,23 @@ export default function EditTrade(props) {
         <h2 className="text-brand font-bold text-2xl">Editing Trade: <span className=" text-lg text-gray-900">{props.params.tradeID}</span></h2>
         <p>Current trade details</p>
         <hr className="my-2" />
-        {status.length > 0 && <p className="text-green-600">{status}</p>}
 
 
         {trade !== null &&
             <>
-            <p>Underlying Currency: {trade.underlying_currency}</p>
+            <h2 className="text-center text-xl">Trade Information for: <strong>{trade.id}</strong></h2>
+                <div className="w-8/12 mt-8 mx-auto py-4 px-4 text-center rounded shadow bg-white">
+                    <p><span className="font-bold">Product ID</span>: {trade.product}</p>
+                    <p><span className="font-bold">Date</span>: {trade.date}</p>
+                    <p><span className="font-bold">Maturity Date</span>: {trade.maturity_date}</p>
+                    <p><span className="font-bold">Strike Price</span>: {trade.strike_price}</p>
+                    <p><span className="font-bold">Quantity</span>: {trade.quantity}</p>
+                    <p><span className="font-bold">Buying Party</span>: {trade.buying_party}</p>
+                    <p><span className="font-bold">Selling Party</span>: {trade.selling_party}</p>
+                    <p><span className="font-bold">Notional Currency</span>: {trade.notional_currency}</p>
+                    <p><span className="font-bold">Underlying Currency</span>: {trade.underlying_currency}</p>
+                    
+                </div>
             <form onSubmit={submit} className="mt-8 w-11/12 p-4 mx-auto h-auto flex flex-col justify-center items-center bg-white shadow rounded-lg" action="">
                 <div className="flex flex-col items-center">
                 <p className="mb-4 font-bold text-lg">Editable sections of a trade:</p>
@@ -118,6 +154,8 @@ export default function EditTrade(props) {
                     <input onChange={(event)=> underlyingPriceChange(event)} value={trade.underlying_price} min={0.01} step=".01" className="w-full py-4 px-6 rounded border hover:border-gray-600" type="number" name="underlying-price" id="underlying-price"/>
                 </div>
                 
+                {error.length > 0 && <p className="text-red-700">{error}</p>}
+                {status.length > 0 && <p className="text-green-600">{status}</p>}
                 <input className="mx-auto mt-2 text-center px-3 py-2 rounded shadow bg-brand text-white uppercase font-semibold text-sm" type="submit" value="Edit Trade"/>
                 </div>
             </form>
