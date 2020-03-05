@@ -26,8 +26,8 @@ export default function Corrections() {
         }
     }
 
-    const overwrite = (correctID) => {
-        api.post(`/correction/delete/`, {"correctionID": correctID}).then(response => {
+    const overwrite = (correctID, tradeID, field) => {
+        api.post(`/correction/delete/`, {"correctionID": correctID, "tradeID": tradeID, "field_type": field}).then(response => {
             console.log(response)
             window.location.reload();
         }).catch(error => {
@@ -35,11 +35,11 @@ export default function Corrections() {
         })
     }
 
-    const submitCorrection = (event, errorID, type) => {
+    const submitCorrection = (event, errorID, type, tradeID) => {
         event.preventDefault();
         console.log(event.target[0].value)
     
-        api.post("/correction/apply", {"errorID": errorID, "field_type": type, "new_value": event.target[0].value}).then(response => {
+        api.post("/correction/apply", {"tradeID": tradeID, "errorID": errorID, "field_type": type, "new_value": event.target[0].value}).then(response => {
             console.log(response);
             window.location.reload();
         }).catch(error => {
@@ -124,7 +124,7 @@ export default function Corrections() {
                                                 <p><span className="text-red-600">{error.erroneous_value}</span></p>
 
                                                 {error.correction === "null" ?
-                                                    <form onSubmit={(event, id)=> submitCorrection(event, error.id, error.erroneous_attribute)} action="" className="mt-1 flex">
+                                                    <form onSubmit={(event, id)=> submitCorrection(event, error.id, error.erroneous_attribute, trade.id)} action="" className="mt-1 flex">
                                                         <input className="w-12 h-6 px-1 py-1 border border-gray-600 rounded rounded-r-none" type="text" />
                                                         <input className="px-1 rounded rounded-l-none text-white bg-blue-600 font-normal text-xs" type="submit" value="Apply Correction"/>
                                                     </form>
@@ -140,7 +140,7 @@ export default function Corrections() {
                                                 <div className="ml-3">
                                                     <p>{error.correction.change_type === "USER" ? "User Correction" : "System Correction"}</p>
                                                     <p className="mb-1"><span className="text-red-600 line-through">{error.correction.old_value}</span> ->  <span className="text-green-700 font-semibold">{error.correction.new_value}</span></p>
-                                                    <button onClick={()=> overwrite(error.correction.id)} className="border border-red-700 px-1 py-1 text-xs rounded">Remove Correction</button>
+                                                    <button onClick={()=> overwrite(error.correction.id, trade.id, error.erroneous_attribute)} className="border border-red-700 px-1 py-1 text-xs rounded">Remove Correction</button>
                                                 </div>
                                             </div>
                                         }
