@@ -62,11 +62,13 @@ export default function Trade(props) {
                     <p><span className="font-bold">Date</span>: {trade.date}</p>
                     <p><span className="font-bold">Maturity Date</span>: {trade.maturity_date}</p>
                     <p><span className="font-bold">Strike Price</span>: {trade.strike_price}</p>
+                    <p><span className="font-bold">Underlying Price</span>: {trade.underlying_price}</p>
                     <p><span className="font-bold">Quantity</span>: {trade.quantity}</p>
                     <p><span className="font-bold">Buying Party</span>: {trade.buying_party}</p>
                     <p><span className="font-bold">Selling Party</span>: {trade.selling_party}</p>
                     <p><span className="font-bold">Notional Currency</span>: {trade.notional_currency}</p>
                     <p><span className="font-bold">Underlying Currency</span>: {trade.underlying_currency}</p>
+                    <p><span className="font-bold">Notional Amount</span>: {trade.notional_amount}</p>
     
                     <div className="mt-6 w-full mx-auto flex justify-center">
                         <button onClick={()=> browserHistory.push(`/trading/edit-trade/${trade.id}`)} className="mr-2 px-4 py-1 text-white rounded shadow bg-indigo-700 hover:cursor-pointer hover:bg-indigo-500">Edit</button>
