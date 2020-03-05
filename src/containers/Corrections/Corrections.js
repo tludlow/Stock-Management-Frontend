@@ -97,7 +97,10 @@ export default function Corrections() {
                     {data.map((trade, idx) => (
                         <div key={idx} className="p-4 bg-white rounded shadow flex">
                             <div className="">
-                                <h4 className="text-brand font-bold">{trade.id}</h4>
+                                <div className="mb-2">
+                                    <p>Trade ID</p>
+                                    <h4 className="text-brand font-bold">{trade.id}</h4>
+                                </div>
                                 <p className="text-xs md:text-sm">Errors: {trade.errors.length}</p>
                                 <p className="mb-2 text-xs md:text-sm">Corrections: {trade.correction_count}</p>
                                 <Link className="px-2 py-1 rounded bg-gray-500 text-white text-xs md:text-sm" to={`/trade/${trade.id}`}>View Trade</Link>
@@ -137,7 +140,7 @@ export default function Corrections() {
                                                 <div className="ml-3">
                                                     <p>{error.correction.change_type === "USER" ? "User Correction" : "System Correction"}</p>
                                                     <p className="mb-1"><span className="text-red-600 line-through">{error.correction.old_value}</span> ->  <span className="text-green-700 font-semibold">{error.correction.new_value}</span></p>
-                                                    <button onClick={()=> overwrite(error.correction.id)} className="border border-red-700 px-1 py-1 text-xs rounded">Overwrite</button>
+                                                    <button onClick={()=> overwrite(error.correction.id)} className="border border-red-700 px-1 py-1 text-xs rounded">Remove Correction</button>
                                                 </div>
                                             </div>
                                         }
