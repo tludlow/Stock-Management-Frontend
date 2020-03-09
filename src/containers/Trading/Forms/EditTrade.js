@@ -10,16 +10,25 @@ export default function EditTrade(props) {
     const [status, setStatus] = useState("");
     const [changes, setChanges] = useState(null);
 
+    const [recommendations, setRecommendations] = useState(null);
+
     useEffect(() => {
         api.get("/trade/id=" + props.params.tradeID).then(response => {
-            setLoading(false);
-
             console.log(response);
             if (response.data.length === 0) {
                 setError("No trades exist with that ID")
             } else {
                 setTrade(response.data[0]);
+
+                api.get(`learning/recommendedrange/currency=${response.data[0].underlying_currency}&product=${response.data[0].product_id}&buyer=${response.data[0].buying_party_id}&seller=${response.data[0].selling_party_id}/`).then(response2 => {
+                    console.log(response2);
+                    setRecommendations(response2.data)
+                }).catch(error2 => {
+                    setRecommendations(null)
+                    console.log(error2);
+                })
             }
+            setLoading(false);
             
         }).catch(err => {
             console.log(err);
@@ -137,21 +146,24 @@ export default function EditTrade(props) {
                 <div className="mb-8" style={{width: "300px"}}>
                     <p className="text-brand text-md font-semibold">Quantity</p>
                     <small>Quantities must be at least 1</small>
+                    {recommendations !== null && <p>Recommended Range: {recommendations.min_quantity}-{recommendations.max_quantity}</p>}
                     <input onChange={(event)=> quantityChange(event)} value={trade.quantity} min="1" className="w-full py-4 px-6 rounded border hover:border-gray-600" type="number" name="quantity" id="quantity"/>
-                </div>
-
-                {/* Strike Price */}
-                <div className="mb-8" style={{width: "300px"}}>
-                    <p className="text-brand text-md font-semibold">Strike Price</p>
-                    <small>Strike price must be a positive number (not 0)</small>
-                    <input onChange={(event)=> strikePriceChange(event)} value={trade.strike_price} min={0.01} step=".01" className="w-full py-4 px-6 rounded border hover:border-gray-600" type="number" name="strike-price" id="strike-price"/>
                 </div>
 
                 {/* Underlying Price */}
                 <div className="mb-8" style={{width: "300px"}}>
                     <p className="text-brand text-md font-semibold">Underlying Price</p>
                     <small>underlying price must be a positive number (not 0)</small>
+                    {recommendations !== null && <p>Recommended Range: {recommendations.min_underlying}-{recommendations.max_underlying}</p>}
                     <input onChange={(event)=> underlyingPriceChange(event)} value={trade.underlying_price} min={0.01} step=".01" className="w-full py-4 px-6 rounded border hover:border-gray-600" type="number" name="underlying-price" id="underlying-price"/>
+                </div>
+
+                {/* Strike Price */}
+                <div className="mb-8" style={{width: "300px"}}>
+                    <p className="text-brand text-md font-semibold">Strike Price</p>
+                    <small>Strike price must be a positive number (not 0)</small>
+                    {recommendations !== null && <p>Recommended Range: {recommendations.min_strike}-{recommendations.max_strikes}</p>}
+                    <input onChange={(event)=> strikePriceChange(event)} value={trade.strike_price} min={0.01} step=".01" className="w-full py-4 px-6 rounded border hover:border-gray-600" type="number" name="strike-price" id="strike-price"/>
                 </div>
                 
                 {error.length > 0 && <p className="text-red-700">{error}</p>}

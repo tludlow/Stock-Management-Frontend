@@ -8,10 +8,13 @@ export default function Trade(props) {
     const [error, setError] = useState("");
     const [trade, setTrade] = useState({});
 
+    const [similarTrades, setSimilarTrades] = useState(null)
+    const [similarError, setSimilarError] = useState("")
+    const [similarLoading, setSimilarLoading] = useState(true)
+
     useEffect(()=> {
         api.get("/trade/id=" + props.params.tradeID).then(response => {
             if(response.data.length === 0) {
-                console.log("woew")
                 setTrade({});
                 setLoading(false);
                 setError("No trade exists with that id."); 
@@ -20,13 +23,37 @@ export default function Trade(props) {
                 setTrade(response.data[0]);
                 setLoading(false);
                 setError("");
+
+                if (trade !== {} && error.length === 0) {
+                    getSimilarData(response.data[0])
+                }
             }
         }).catch(err => {
             console.log(err);
             setError(err.message);
             setLoading(false);
         });
+
     }, []);
+
+    const navigateTo = (id) => {
+        browserHistory.push("/trade/" + id)
+        window.location.reload()
+    }
+
+    const getSimilarData = (trade) => {
+        //Load similar trades.
+        api.get(`/trade/product=${trade.product_id}&buyer=${trade.buying_party_id}&seller=${trade.selling_party_id}/`).then(response => {
+            setSimilarTrades(response.data)
+            setSimilarLoading(false);
+        }).catch(error => {
+            setSimilarError("Error getting similar data to the trade.")
+            console.log(error)
+            setSimilarLoading(false);
+        })
+
+        console.log("Similar trades: " + similarTrades)
+    }
 
     if (loading) {
         return (
@@ -75,6 +102,30 @@ export default function Trade(props) {
                         <button onClick={()=> browserHistory.push(`/trading/delete-trade/${trade.id}`)} className="ml-2 px-4 py-1 text-white rounded shadow bg-red-700 hover:cursor-pointer hover:bg-red-500">Delete</button>
                     </div>
                 </div>
+                
+                {similarLoading ? 
+                    <div className="h-32 w-32 mx-auto spinner text-center"></div>
+                :
+                similarError.length > 0 ? <p className="text-red-700">Error getting similar trade data: {similarError}</p>
+                    :
+                    <div className="mt-12">
+                        <h3 className="text-brand text-lg font-semibold">Similar trades</h3>
+                        <p>The following trades have similar attributes to the current trade being viewed.</p>
+
+                        <div className="mt-6 grid grid-cols-3 md:grid-cols-6 lg:grid-cols-3 gap-8">
+                            {similarTrades.map((strade, idx)=> (
+                                <div key={idx} className="p-4 text-center bg-white rounded shadow">
+                                    <p className="text-brand font-semibold">{strade.id}</p>
+                                    <p>Quantity: {strade.quantity}</p>
+                                    <p>Strike Price: {strade.quantity}</p>
+                                    <p>Quantity: {strade.quantity}</p>
+                                    <button onClick={()=> navigateTo(strade.id)} className="mt-3 px-2 py-1 bg-brand text-white hover:cursor-pointer rounded">View Trade</button>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                }
+                
                 
             </>
         );

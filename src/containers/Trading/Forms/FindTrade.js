@@ -38,7 +38,7 @@ export default function FindTrade() {
     return (
         <>
         <h2 className="text-brand font-bold text-2xl">Find a Trade</h2>
-        <p>Search for a trade and view, edit or delete the trade</p>
+        <p>Search for a trade by it's ID</p>
 
         <form className="mt-6" onSubmit={submit}>
             <label className="block uppercase tracking-wide text-gray-600 text-xs font-bold mb-2" htmlFor="trade-id">

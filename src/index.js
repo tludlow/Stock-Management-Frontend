@@ -43,7 +43,7 @@ render(
                 <Route path="/trading/all" component={TradingAll} />
                 <Route path="/trading/create-trade" component={CreateTrade} />
                 <Route path="/trading/edit-trade/:tradeID" component={EditTrade} />
-                <Route path="/trading/delete-trade/(:tradeID)" component={DeleteTrade} />
+                <Route path="/trading/delete-trade(/:tradeID)" component={DeleteTrade} />
                 <Route path="/trading/find-trade" component={FindTrade} />
                 <Route path="/trade/:tradeID" component={Trade} />
 

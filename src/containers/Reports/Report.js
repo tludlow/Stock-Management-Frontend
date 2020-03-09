@@ -173,7 +173,7 @@ export default function Report(props) {
     
                     <section className="mt-12" id="deleted-trades">
                         <h3 className="text-brand font-semibold text-lg">Deleted Trades</h3>
-                        <p>Trades which a user has deleted on this daye</p>
+                        <p>Trades which a user has deleted today</p>
 
                         {reportData.num_of_deleted_trades > 0 &&
                         <div className="mt-3">

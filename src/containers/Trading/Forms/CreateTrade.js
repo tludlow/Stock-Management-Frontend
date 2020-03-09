@@ -29,6 +29,8 @@ export default function CreateTrade() {
     const [strikePrice, setStrikePrice] = useState(0);
     const [underlyingPrice, setUnderlyingPrice] = useState(0);
 
+    const [recommendations, setRecommendations] = useState(null);
+
     useEffect(()=> {
         getCompaniesAndCurrenciesAndProducts();
 
@@ -54,7 +56,7 @@ export default function CreateTrade() {
             api.get("/currency/list"),
             //api.get("/product/list")
         ]).then(axios.spread((companyRes, currencyRes) => {
-            console.log(companyRes, currencyRes);
+            console.log("COMPANY AND CURRENCY LISTS", companyRes, currencyRes);
             setLoading(false);
             setCompanies(companyRes.data);
             setCurrencies(currencyRes.data);
@@ -140,6 +142,7 @@ export default function CreateTrade() {
     }
 
     const verifyForm = (sellingCompany, buyingCompany, product, underlyingCurrency, notionalCurrency, maturityDate, quantity, strikePrice, underlyingPrice) => {
+        getRecommendations()
         // console.log(sellingCompany, buyingCompany, product, underlyingCurrency, notionalCurrency, maturityDate, quantity, strikePrice, underlyingPrice)
         if (sellingCompany === null) {
             setFormError("Please enter a selling company")
@@ -226,6 +229,19 @@ export default function CreateTrade() {
             setSubmitLoading(false)
             setSubmitError(err.message)
         })
+    }
+
+    const getRecommendations = () => {
+        if (underlyingCurrency !== null && product !== null && buyingCompany !== null && sellingCompany !== null) {
+            api.get(`learning/recommendedrange/currency=${underlyingCurrency.currency}&product=${product.id}&buyer=${buyingCompany.id}&seller=${sellingCompany.id}/`).then(response => {
+                console.log(response);
+                setRecommendations(response.data)
+            }).catch(error => {
+                setRecommendations(null)
+                console.log(error);
+            })
+        }
+        
     }
 
     /**
@@ -360,6 +376,7 @@ export default function CreateTrade() {
             <div className="mb-8" style={{width: "300px"}}>
                 <p className="text-brand text-md font-semibold">Quantity</p>
                 <small className="mb-2">Quantity must be a positive number, not including 0</small><br />
+                {recommendations !== null && <p>Recommended range: {recommendations.min_quantity}-{recommendations.max_quantity}</p>}
                 <input onChange={quantityChange} value={quantity} min="1" className="w-full py-4 px-6 rounded border hover:border-gray-600" type="number" name="quantity" id="quantity"/>
             </div>
 
@@ -377,6 +394,7 @@ export default function CreateTrade() {
                 <p className="mb-2 text-brand text-md font-semibold">Underlying Price</p>
                 <small>Underlying price must be a positive number (not 0)</small><br />
                 {underlyingCurrency === null ? <small>The current price per unit represented in the underlying currency</small> : <small>The current price per unit represented in the underlying currency:  {underlyingCurrency.currency}</small>}
+                {recommendations !== null && <p>Recommended range: {recommendations.min_underlying}-{recommendations.max_underlying}</p>}
                 <input disabled={underlyingCurrency === null} onChange={underlyingPriceChange} min={0.01} step=".01" className="w-full py-4 px-6 rounded border hover:border-gray-600" type="number" name="underlying-price" id="underlying-price"/>
             </div>
 
@@ -385,6 +403,7 @@ export default function CreateTrade() {
                 <p className="mb-2 text-brand text-md font-semibold">Strike Price</p>
                 <small>Strike price must be a positive number (not 0)</small><br />
                 {underlyingCurrency === null ? <small>Strike price is represented in the underlying currency</small> : <small>Strike price is represented in the underlying currency:  {underlyingCurrency.currency}</small>}
+                {recommendations !== null && <p>Recommended range: {recommendations.min_strike}-{recommendations.max_strikes}</p>}
                 <input disabled={underlyingCurrency === null} onChange={strikePriceChange} min={0.01} step=".01" className="w-full py-4 px-6 rounded border hover:border-gray-600" type="number" name="strike-price" id="strike-price"/>
             </div>
             
