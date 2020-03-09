@@ -70,7 +70,7 @@ export default function EditTrade(props) {
         let updatedTradeObj = trade.trade_id = trade.id
         setTrade(updatedTradeObj)
 
-        api.post("/trade/edit/", {"trade_id": trade.trade_id, "maturity_date": trade.maturity_date, "underlying_price": trade.underlying_price, "strike_price": trade.strike_price}).then(response => {
+        api.post("/trade/edit/", trade).then(response => {
             console.log(response);
             setLoading(false)
             if (response.data.message !== undefined) {

@@ -19,7 +19,7 @@ export default function Report(props) {
 
     useEffect(()=> {
         document.title = `CS261 - Report: ${year}-${month}-${day}`
-        api.get(`/report/year=${year}&month=${month}&day=${day}/`).then(response => {
+        api.get(`report/year=${year}&month=${month}&day=${day}/`).then(response => {
             if(response.status === 400) {
                 setError("A report for this date doesnt exist")
                 setLoading(false)

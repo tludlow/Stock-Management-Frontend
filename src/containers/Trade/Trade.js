@@ -12,6 +12,8 @@ export default function Trade(props) {
     const [similarError, setSimilarError] = useState("")
     const [similarLoading, setSimilarLoading] = useState(true)
 
+    const [errors, setErrors] = useState(null)
+
     useEffect(()=> {
         api.get("/trade/id=" + props.params.tradeID).then(response => {
             if(response.data.length === 0) {
@@ -26,6 +28,8 @@ export default function Trade(props) {
 
                 if (trade !== {} && error.length === 0) {
                     getSimilarData(response.data[0])
+                    checkForErrors()
+                    
                 }
             }
         }).catch(err => {
@@ -36,9 +40,32 @@ export default function Trade(props) {
 
     }, []);
 
+    const prettifyAttribute = (att) => {
+        if (att === "QT") {
+            return "Quantity"
+        }
+        if (att === "UP") {
+            return "Underlying Price"
+        }
+        if (att === "ST") {
+            return "Strike Price"
+        }
+    }
+
     const navigateTo = (id) => {
         browserHistory.push("/trade/" + id)
         window.location.reload()
+    }
+
+    const checkForErrors = () => {
+        api.get(`/error/check/id=${props.params.tradeID}`).then(response => {
+            console.log(response)
+            if (response.data.length !== 0) {
+                setErrors(response.data)
+            }
+        }).catch(err => {
+            console.log(err)
+        })
     }
 
     const getSimilarData = (trade) => {
@@ -103,6 +130,20 @@ export default function Trade(props) {
                     </div>
                 </div>
                 
+                {errors !== null &&
+                <div className="mt-6">
+                    <h3 className="text-brand text-lg font-semibold">This trades errors</h3>
+                    <p>To fix this trades errors, please edit the trade or go to the corrections page</p>
+                    <div className="mt-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {errors.map((tradeerror, idx)=> (
+                            <div key={idx} className="flex flex-col items-center p-4 bg-white rounded shadow">
+                                <p className="font-bold">{prettifyAttribute(tradeerror.erroneous_attribute)}</p>
+                                <p>Value: {tradeerror.erroneous_value}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                }
                 {similarLoading ? 
                     <div className="h-32 w-32 mx-auto spinner text-center"></div>
                 :
@@ -112,7 +153,7 @@ export default function Trade(props) {
                         <h3 className="text-brand text-lg font-semibold">Similar trades</h3>
                         <p>The following trades have similar attributes to the current trade being viewed.</p>
 
-                        <div className="mt-6 grid grid-cols-3 md:grid-cols-6 lg:grid-cols-3 gap-8">
+                        <div className="mt-6 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
                             {similarTrades.map((strade, idx)=> (
                                 <div key={idx} className="p-4 text-center bg-white rounded shadow">
                                     <p className="text-brand font-semibold">{strade.id}</p>
