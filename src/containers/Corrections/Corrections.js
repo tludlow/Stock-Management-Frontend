@@ -49,6 +49,16 @@ export default function Corrections() {
 
     }
 
+    const ignoreError = (eid) => {
+        api.post("error/ignore", {"errorID": eid}).then(response => {
+            console.log(response);
+            window.location.reload();
+        }).catch(error => {
+            console.log(error)
+            setError("Error when ignoring error.")
+        })
+    }
+
     useEffect(()=> {
         api.get("/errorsandcorrections").then(response => {
             console.log(response);
@@ -120,7 +130,11 @@ export default function Corrections() {
                                                 }
                                             </div>
                                             <div className="ml-3">
-                                                <p className="font-semibold">({eidx + 1}) {prettyifyAttribute(error.erroneous_attribute)}</p>
+                                                <div className="flex">
+                                                    <p className="font-semibold">({eidx + 1}) {prettyifyAttribute(error.erroneous_attribute)}</p>
+                                                    <button onClick={()=> ignoreError(error.id)} className="px-2 py-1 text-white bg-red-500 rounded ml-3">Ignore</button>
+                                                </div>
+                                                
                                                 <p><span className="text-red-600">{error.erroneous_value}</span></p>
 
                                                 {error.correction === "null" ?

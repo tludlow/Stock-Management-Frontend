@@ -70,7 +70,7 @@ export default function EditTrade(props) {
         let updatedTradeObj = trade.trade_id = trade.id
         setTrade(updatedTradeObj)
 
-        api.post("/trade/edit/", trade).then(response => {
+        api.post("/trade/edit/", {"trade_id": trade.trade_id, "maturity_date": trade.maturity_date, "underlying_price": trade.underlying_price, "strike_price": trade.strike_price}).then(response => {
             console.log(response);
             setLoading(false)
             if (response.data.message !== undefined) {
@@ -135,6 +135,8 @@ export default function EditTrade(props) {
             <form onSubmit={submit} className="mt-8 w-11/12 p-4 mx-auto h-auto flex flex-col justify-center items-center bg-white shadow rounded-lg" action="">
                 <div className="flex flex-col items-center">
                 <p className="mb-4 font-bold text-lg">Editable sections of a trade:</p>
+                
+
                 {/* Maturity Date */}
                 <div className="mb-8" style={{width: "300px"}}>
                     <p className="text-brand text-md font-semibold">Maturity Date</p>
@@ -168,6 +170,19 @@ export default function EditTrade(props) {
                 
                 {error.length > 0 && <p className="text-red-700">{error}</p>}
                 {status.length > 0 && <p className="text-green-600">{status}</p>}
+
+                {recommendations !== null && ((trade.quantity > recommendations.max_quantity) || (trade.quantity < recommendations.min_quantity)) &&
+                    <p className="text-red-700">Your <span className="font-semibold underline">quantity</span> is outside of the recommended range, do you wish to overwrite the corrections?</p>
+                }
+
+                {recommendations !== null && ((trade.underlying_price > recommendations.max_underlying) || (trade.underlying_price < recommendations.min_underlying)) &&
+                    <p className="text-red-700">Your <span className="font-semibold underline">underlying price</span> is outside of the recommended range, do you wish to overwrite the corrections?</p>
+                }
+
+                {recommendations !== null && ((trade.strike_price > recommendations.max_strikes) || (trade.strike_price < recommendations.min_strike)) &&
+                    <p className="text-red-700">Your <span className="font-semibold underline">strike price</span> is outside of the recommended range, do you wish to overwrite the corrections?</p>
+                }
+                
                 <input className="mx-auto mt-2 text-center px-3 py-2 rounded shadow bg-brand text-white uppercase font-semibold text-sm" type="submit" value="Edit Trade"/>
                 </div>
             </form>
