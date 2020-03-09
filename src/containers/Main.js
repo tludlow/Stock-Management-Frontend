@@ -27,7 +27,7 @@ export default function Main(props) {
                     <Link onClick={()=> setIsOpen(false)} to="/corrections" className="mt-1 block px-3 py-2 text-white font-semibold rounded hover:bg-gray-800 sm:mt-0 sm:ml-6">Errors / Corrections</Link>
                 </nav>
             </header>
-            <div className="content container mx-auto mt-6 flex flex-col align-center md:justify-start text-gray-800">
+            <div className="p-4 md:p-0  content container mx-auto mt-6 flex flex-col align-center md:justify-start text-gray-800 bg-gray-100">
                 {/* We use cloneElement here so we can auto pass down props to other components within the tree. */}
                 {React.cloneElement(props.children, props)}
             </div>

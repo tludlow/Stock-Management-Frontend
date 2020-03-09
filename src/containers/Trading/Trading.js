@@ -72,7 +72,10 @@ export default function Trading() {
         
         <div className="trades mt-16 mx-4">
             <div className="w-full flex justify-between items-baseline">
-                <h3 className="text-brand font-bold text-lg mb-1">Trades <span className="block text-gray-500 text-sm font-normal">Ordered by: recent</span></h3>
+                <h3 className="text-brand font-bold text-lg mb-1">Trades
+                    <span className="block text-gray-500 text-sm font-normal">Ordered by: recent</span>
+                    <span className="block text-gray-500 text-sm font-normal">Trades with warning symbols contain erroneous data</span>
+                </h3>
                 <Link to="/trading/all" className="px-2 py-1 bg-brand rounded text-white uppercase font-semibold leading-normal text-xs hover:text-gray-300 hover:bg-indigo-700 cursor-pointer">View more</Link>
             </div>
             
@@ -94,6 +97,7 @@ export default function Trading() {
                         quantity={trade.quantity} 
                         strikePrice={trade.strike_price}
                         maturityDate={trade.maturity_date}
+                        errors={trade.errors}
                     />
                 ))}
             </div>

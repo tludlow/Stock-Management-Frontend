@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import api from "../../../api";
 
+import { browserHistory } from "react-router"
+
 export default function EditTrade(props) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -120,6 +122,7 @@ export default function EditTrade(props) {
         {trade !== null &&
             <>
             <h2 className="text-center text-xl">Trade Information for: <strong>{trade.id}</strong></h2>
+                <button className="w-1/12 mx-auto px-2 py-1 rounded text-white bg-brand" onClick={()=> browserHistory.push(`/trade/${trade.id}`)}>View Trade</button>
                 <div className="w-8/12 mt-8 mx-auto py-4 px-4 text-center rounded shadow bg-white">
                     <p><span className="font-bold">Product ID</span>: {trade.product}</p>
                     <p><span className="font-bold">Date</span>: {trade.date}</p>

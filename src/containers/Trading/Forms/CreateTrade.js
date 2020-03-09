@@ -31,6 +31,9 @@ export default function CreateTrade() {
 
     const [recommendations, setRecommendations] = useState(null);
 
+
+    const [modalOpen, setModalOpen] = useState(true)
+
     useEffect(()=> {
         getCompaniesAndCurrenciesAndProducts();
 
@@ -408,7 +411,35 @@ export default function CreateTrade() {
             </div>
             
             {submitError.length > 0 && <p className="text-red-700">An error occured when creating the request: {submitError}</p>}
-                
+
+            {recommendations !== null && ((quantity > recommendations.max_quantity) || (quantity < recommendations.min_quantity)) &&
+                    <div className="w-1-2 bg-red-600 p-4 rounded text-center mb-3">
+                    <p className="text-white font-semibold">Warning!</p>
+                    <p className="text-white">The quantity you have entered is outside of the recommended range</p>
+                    <p className="text-white">Recommended range: {recommendations.min_quantity}-{recommendations.max_quantity}</p>
+                    <p className="text-white">Your quantity: {quantity}</p>
+                   </div>
+                }
+
+                {recommendations !== null && ((underlyingPrice > recommendations.max_underlying) || (underlyingPrice < recommendations.min_underlying)) &&
+                    <div className="w-1-2 bg-red-600 p-4 rounded text-center mb-3">
+                     <p className="text-white font-semibold">Warning!</p>
+                     <p className="text-white">The underlying price you have entered is outside of the recommended range</p>
+                     <p className="text-white">Recommended range: {recommendations.min_underlying}-{recommendations.max_underlying}</p>
+                     <p className="text-white">Your underlying price: {underlyingPrice}</p>
+                    </div>
+                }
+
+                {recommendations !== null && ((strikePrice > recommendations.max_strikes) || (strikePrice < recommendations.min_strike)) &&
+                    <div className="w-1-2 bg-red-600 p-4 rounded text-center">
+                        <p className="text-white font-semibold">Warning!</p>
+                        <p className="text-white">The strike price you have entered is outside of the recommended range</p>
+                        <p className="text-white">Recommended range: {recommendations.min_strike}-{recommendations.max_strikes}</p>
+                        <p className="text-white">Your strike price: {strikePrice}</p>
+                    </div>
+
+                }
+
             {formError.length > 0 ?
                 <>
                 <p className="mb-4 text-red-600 font-semibold text-md">Error! {formError}</p>
