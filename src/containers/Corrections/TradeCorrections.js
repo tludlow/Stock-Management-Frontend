@@ -11,6 +11,10 @@ export default function TradeCorrection(props) {
 
     const [errorsAndCorrections, setErrrorsAndCorrections] = useState(null)
 
+    const [recommendedCorrections, setRecommendedCorrections] = useState(null);
+    const [correctionsLoading, setCorrectionsLoading] = useState(true);
+    const [correctionsError, setCorrectionsError] = useState("");
+
     useEffect(()=> {
         api.get("/errorsandcorrections/trade=" + props.params.tradeID).then(response => {
             console.log(response)
@@ -21,6 +25,16 @@ export default function TradeCorrection(props) {
             setLoading(false)
             console.log(error)
         })
+
+        //Get the recommended corrections for this trade
+        api.get(`/correction/suggest/trade=${props.params.tradeID}/`).then(response => {
+            console.log(response)
+            setRecommendedCorrections(response.data)
+            setCorrectionsLoading(false)
+        }).catch(error => {
+            setCorrectionsError(error.message)
+            setCorrectionsLoading(false)
+        });
     }, [])
 
     const prettyifyAttribute = (name) => {
@@ -69,6 +83,15 @@ export default function TradeCorrection(props) {
         }).catch(error => {
             console.log(error)
             setError("Error when ignoring error.")
+        })
+    }
+
+    const recommendationSubmit = (errorID, tradeID, type, value) => {
+        api.post(`/correction/system`, {"errorID": errorID, "tradeID": tradeID, "field_type": type, "value": value}).then(response => {
+            console.log(response)
+            window.location.reload();
+        }).catch(error => {
+            setError("Error applying system correction.")
         })
     }
 
@@ -155,7 +178,44 @@ export default function TradeCorrection(props) {
                                 </div>
                             </div>
                         ))}
-                </div>
+                    </div>
+                    <div className="ml-8 pl-4 border-l-2 border-dashed border-gray-600">
+                        <h3 className="font-semibold text-green-700 mb-2">Recommended Corrections</h3>
+                        
+                        {correctionsLoading ?
+                            <div className="h-32 w-32 mx-auto spinner text-center"></div>
+                        :
+                            correctionsError.length > 0 ?
+                                <p>{correctionsError}</p>
+                            :
+                                <div className="">
+                                    {errorsAndCorrections.errors_and_corrections[0].errors.map((correction, idx)=> (
+                                        <div key={idx} className="mb-5">
+                                           <p className="font-semibold">{prettyifyAttribute(correction.erroneous_attribute)}</p>
+                                           {prettyifyAttribute(correction.erroneous_attribute) === "Quantity" &&
+                                                <div className="">
+                                                <p>{recommendedCorrections.quantity}</p>
+                                                <button onClick={()=> recommendationSubmit(correction.id, props.params.tradeID, correction.erroneous_attribute, recommendedCorrections.quantity)} className="bg-green-700 text-white px-2 py-1 rounded">Apply</button>
+                                            </div> 
+                                           }
+                                           {prettyifyAttribute(correction.erroneous_attribute) === "Underlying Price" &&
+                                            <div className="">
+                                                <p>{recommendedCorrections.underlying}</p>
+                                                <button onClick={()=> recommendationSubmit(correction.id, props.params.tradeID, correction.erroneous_attribute, recommendedCorrections.underlying)} className="bg-green-700 text-white px-2 py-1 rounded">Apply</button>
+                                            </div>   
+                                           }
+                                           {prettyifyAttribute(correction.erroneous_attribute) === "Strike Price" &&
+                                                <div className="">
+                                                <p>{recommendedCorrections.strike}</p>
+                                                <button onClick={()=> recommendationSubmit(correction.id, props.params.tradeID, correction.erroneous_attribute, recommendedCorrections.strike)} className="bg-green-700 text-white px-2 py-1 rounded">Apply</button>
+                                            </div> 
+                                           }
+                                        </div>
+                                    ))}
+                                </div>
+
+                        }
+                    </div>
                 </div>
             ))}
         </div>
