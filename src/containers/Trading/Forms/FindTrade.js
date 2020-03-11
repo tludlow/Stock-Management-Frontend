@@ -108,7 +108,8 @@ export default function FindTrade() {
         <hr className="my-8" />
 
         <h2 className="font-semibold text-brand text-xl">You can also search for trades by specific parts of their data</h2>
-        <p>You can specify as many of these as you wish to search, but if you provide a maximum or a minimum you must also provide the other value too</p>
+        <p>Specify the range of data you want to search for.</p>
+        <p>You can specify a minimum or a maximum without the other, it just limits the range to be everything more than (mimimum) or less than (maxmimum)</p>
 
         <form className="mt-8 flex flex-col" action="" onSubmit={submitFilter}>
 

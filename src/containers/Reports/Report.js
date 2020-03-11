@@ -133,8 +133,9 @@ export default function Report(props) {
                                             <td className="border px-4 py-2 text-center">{created_trade.maturity_date}</td>
                                             <td className="border px-4 py-2 text-center">{moment(created_trade.date).fromNow()}</td>
                                             <td className="border px-4 py-2">
+                                                <Link className="mr-3 px-2 py-1 bg-gray-700 text-white rounded" to={`/trade/${created_trade.id}`}>View</Link>
                                                 <Link className="mr-3 px-2 py-1 bg-blue-700 text-white rounded" to={`/trading/edit-trade/${created_trade.id}`}>Edit</Link>
-                                                <Link className="ml-3 px-2 py-1 bg-red-700 text-white rounded" to={`/trading/delete-trade/${created_trade.id}`}>Delete</Link>
+                                                <Link className="px-2 py-1 bg-red-700 text-white rounded" to={`/trading/delete-trade/${created_trade.id}`}>Delete</Link>
                                             </td>
                                         </tr>
                                     ))}
