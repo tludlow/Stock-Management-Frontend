@@ -20,11 +20,11 @@ export default function Trading() {
 
     useEffect(()=> {
         console.log("getting company data");
-        api.get("/trade/recent?page_number=1").then(response => {
+        api.get("/trade/recent").then(response => {
             console.log(response);
             setError("");
-            setLoading(false);
             setTrades(response.data);
+            setLoading(false);
         }).catch(err => {
             console.log(err);
             setError(err.message);

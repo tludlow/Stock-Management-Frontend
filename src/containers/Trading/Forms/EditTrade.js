@@ -10,6 +10,7 @@ export default function EditTrade(props) {
     const [trade, setTrade] = useState(null);
 
     const [status, setStatus] = useState("");
+    //eslint-disable-next-line
     const [changes, setChanges] = useState(null);
 
     const [recommendations, setRecommendations] = useState(null);
@@ -186,7 +187,7 @@ export default function EditTrade(props) {
                     <p className="text-red-700">Your <span className="font-semibold underline">strike price</span> is outside of the recommended range, do you wish to overwrite the corrections?</p>
                 }
                 
-                <input className="mx-auto mt-2 text-center px-3 py-2 rounded shadow bg-brand text-white uppercase font-semibold text-sm" type="submit" value="Edit Trade"/>
+                <input className="disabled:opacity-50 mx-auto mt-2 text-center px-3 py-2 rounded shadow bg-brand text-white uppercase font-semibold text-sm" disabled={trade.quantity === "" | trade.strike_price === "" | trade.underlying_price === "" || trade.maturity_date === ""} type="submit" value="Edit Trade"/>
                 </div>
             </form>
             </>

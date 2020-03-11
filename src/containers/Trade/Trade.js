@@ -16,13 +16,14 @@ export default function Trade(props) {
 
     useEffect(()=> {
         document.title = "CS261 | Trade: " + props.params.tradeID
-        api.get("/trade/id=" + props.params.tradeID).then(response => {
+        api.get(`/trade/id=${props.params.tradeID}`).then(response => {
+            console.log(response);
             if(response.data.length === 0) {
                 setTrade({});
                 setLoading(false);
                 setError("No trade exists with that id."); 
             } else {
-                console.log(response);
+                
                 setTrade(response.data[0]);
                 setLoading(false);
                 setError("");
@@ -62,7 +63,7 @@ export default function Trade(props) {
         api.get(`/error/check/id=${props.params.tradeID}`).then(response => {
             console.log(response)
             if (response.data.length !== 0) {
-                setErrors(response.data)
+                setErrors(response.data.errors)
             }
         }).catch(err => {
             console.log(err)
@@ -144,10 +145,21 @@ export default function Trade(props) {
                     <p>To fix this trades errors, please edit the trade or go to the corrections page</p>
                     <div className="mt-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {errors.map((tradeerror, idx)=> (
-                            <div key={idx} className="border border-red-400 flex flex-col items-center p-4 bg-white rounded shadow">
+                            <div key={idx} className={tradeerror.correction_applied ? "border border-green-400 flex flex-col items-center p-4 bg-white rounded shadow" : "border border-red-400 flex flex-col items-center p-4 bg-white rounded shadow"}>
                                 <p className="font-bold">{prettifyAttribute(tradeerror.erroneous_attribute)}</p>
-                                <p className="mb-2">Value: {tradeerror.erroneous_value}</p>
-                                <button className="text-white px-2 py-1 bg-green-600 rounded" onClick={()=> browserHistory.push(`/corrections/${trade.id}`)}>Correct</button>
+                                {tradeerror.correction_applied ?
+                                    <>
+                                        <p className="line-through">Value: {tradeerror.erroneous_value}</p>
+                                        <p className="mb-2 text-green-600">Correction applied: {tradeerror.correction_applied.new_value}</p>
+                                        <button className="text-white px-2 py-1 bg-brand rounded" onClick={()=> browserHistory.push(`/corrections/${trade.id}`)}>Manage</button>
+                                    </>
+                                :   
+                                    <>
+                                    <p className="mb-2">Value: {tradeerror.erroneous_value}</p>
+                                    <button className="text-white px-2 py-1 bg-green-600 rounded" onClick={()=> browserHistory.push(`/corrections/${trade.id}`)}>Correct</button>
+                                    </>
+                                }
+                                
 
                             </div>
                         ))}

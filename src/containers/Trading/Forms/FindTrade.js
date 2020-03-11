@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 
-import { browserHistory,  Link } from "react-router"
+import { browserHistory } from "react-router"
 import Trade from "../Trade"
 
 import api from "../../../api";
@@ -16,6 +16,7 @@ export default function FindTrade() {
     const [filterTrades, setFilterTrades] = useState(null)
     const [filterLoading, setFilterLoading] = useState(false)
 
+    //eslint-disable-next-line
     const [trade, setTrade] = useState(null)
 
     const submit = (e) => {

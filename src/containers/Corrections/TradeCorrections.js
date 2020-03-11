@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 
-import { browserHistory, Link } from "react-router";
+import { Link } from "react-router";
 
 import api from "../../api";
 
@@ -180,7 +180,8 @@ export default function TradeCorrection(props) {
                         ))}
                     </div>
                     <div className="ml-8 pl-4 border-l-2 border-dashed border-gray-600">
-                        <h3 className="font-semibold text-green-700 mb-2">Recommended Corrections</h3>
+                        <h3 className="font-semibold text-green-700">Recommended System Corrections</h3>
+                        <p className="mb-2">Sytstem corrections recommend the mean value of all the similar trades recently created</p>
                         
                         {correctionsLoading ?
                             <div className="h-32 w-32 mx-auto spinner text-center"></div>

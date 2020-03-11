@@ -17,6 +17,7 @@ export default function CreateTrade() {
     const [formError, setFormError] = useState("Please enter all of the trade information");
     const [submitError, setSubmitError] = useState("")
     const [submitLoading, setSubmitLoading] = useState(false)
+    //eslint-disable-next-line
     const [submitStatus, setSubmitStatus] = useState("")
 
     const [sellingCompany, setSellingCompany] = useState(null);
@@ -31,7 +32,7 @@ export default function CreateTrade() {
 
     const [recommendations, setRecommendations] = useState(null);
 
-
+    //eslint-disable-next-line
     const [modalOpen, setModalOpen] = useState(true)
 
     useEffect(()=> {
