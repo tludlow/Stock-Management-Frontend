@@ -31,6 +31,7 @@ import FourOFour from "./containers/FourOFour";
 import store, {history} from './store';
 
 import Corrections from './containers/Corrections/Corrections';
+import TradeCorrection from './containers/Corrections/TradeCorrections';
 
 
 //render the react app, in the structure provided by react-router into the index.html root element
@@ -43,7 +44,7 @@ render(
                 <Route path="/trading/all" component={TradingAll} />
                 <Route path="/trading/create-trade" component={CreateTrade} />
                 <Route path="/trading/edit-trade/:tradeID" component={EditTrade} />
-                <Route path="/trading/delete-trade/(:tradeID)" component={DeleteTrade} />
+                <Route path="/trading/delete-trade(/:tradeID)" component={DeleteTrade} />
                 <Route path="/trading/find-trade" component={FindTrade} />
                 <Route path="/trade/:tradeID" component={Trade} />
 
@@ -51,6 +52,7 @@ render(
                 <Route path="/report/:reportDate" component={Report} />
 
                 <Route path="/corrections" component={Corrections} />
+                <Route path="/corrections/:tradeID" component={TradeCorrection} />
 
                 <Route path="/*" component={FourOFour} />
             </Route>

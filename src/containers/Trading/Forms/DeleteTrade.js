@@ -44,18 +44,25 @@ export default function DeleteTrade(props) {
 
     const deleteTrade = id => {
         setLoading(true);
+        setError("")
         api.post("/trade/delete/",
         {
             trade_id: id
         }).then(response => {
-            console.log(response);
-            setLoading(false);
-            setJustDeleted(true);
-        }).catch(err => {
-            console.log(err);
-            setError(err.message);
-            setLoading(false);
-        });
+            console.log(response)
+            if (response.status === 400) {
+                setError(response.data.error);
+                setLoading(false);
+            } else {
+                console.log(response);
+                setLoading(false);
+                setJustDeleted(true);
+            }
+            }).catch(err => {
+                console.log(err);
+                setError(err.response.data.error);
+                setLoading(false);
+            });
     }
 
     return (

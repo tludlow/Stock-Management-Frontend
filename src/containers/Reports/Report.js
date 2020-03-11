@@ -19,7 +19,7 @@ export default function Report(props) {
 
     useEffect(()=> {
         document.title = `CS261 - Report: ${year}-${month}-${day}`
-        api.get(`/report/year=${year}&month=${month}&day=${day}/`).then(response => {
+        api.get(`report/year=${year}&month=${month}&day=${day}/`).then(response => {
             if(response.status === 400) {
                 setError("A report for this date doesnt exist")
                 setLoading(false)
@@ -133,8 +133,9 @@ export default function Report(props) {
                                             <td className="border px-4 py-2 text-center">{created_trade.maturity_date}</td>
                                             <td className="border px-4 py-2 text-center">{moment(created_trade.date).fromNow()}</td>
                                             <td className="border px-4 py-2">
+                                                <Link className="mr-3 px-2 py-1 bg-gray-700 text-white rounded" to={`/trade/${created_trade.id}`}>View</Link>
                                                 <Link className="mr-3 px-2 py-1 bg-blue-700 text-white rounded" to={`/trading/edit-trade/${created_trade.id}`}>Edit</Link>
-                                                <Link className="ml-3 px-2 py-1 bg-red-700 text-white rounded" to={`/trading/delete-trade/${created_trade.id}`}>Delete</Link>
+                                                <Link className="px-2 py-1 bg-red-700 text-white rounded" to={`/trading/delete-trade/${created_trade.id}`}>Delete</Link>
                                             </td>
                                         </tr>
                                     ))}
@@ -173,7 +174,7 @@ export default function Report(props) {
     
                     <section className="mt-12" id="deleted-trades">
                         <h3 className="text-brand font-semibold text-lg">Deleted Trades</h3>
-                        <p>Trades which a user has deleted on this daye</p>
+                        <p>Trades which a user has deleted today</p>
 
                         {reportData.num_of_deleted_trades > 0 &&
                         <div className="mt-3">
@@ -197,17 +198,17 @@ export default function Report(props) {
                                 <tbody>
                                     {reportData.deleted_trades.map((deleted_trade, index)=> (
                                         <tr key={index} className="bg-white">
-                                            <td className="border px-4 py-2 text-center">{deleted_trade.trade.id}</td>
-                                            <td className="border px-4 py-2 text-center">{deleted_trade.trade.buying_party}</td>
-                                            <td className="border px-4 py-2 text-center">{deleted_trade.trade.selling_party}</td>
-                                            <td className="border px-4 py-2 text-center">{deleted_trade.trade.product}</td>
-                                            <td className="border px-4 py-2 text-center">{deleted_trade.trade.underlying_price}</td>
-                                            <td className="border px-4 py-2 text-center">{deleted_trade.trade.quantity}</td>
-                                            <td className="border px-4 py-2 text-center">{deleted_trade.trade.strike_price}</td>
-                                            <td className="border px-4 py-2 text-center">{deleted_trade.trade.underlying_currency} | {deleted_trade.trade.notional_currency}</td>
-                                            <td className="border px-4 py-2 text-center">{deleted_trade.trade.maturity_date}</td>
-                                            <td className="border px-4 py-2 text-center">{moment(deleted_trade.trade.date).fromNow()}</td>
-                                            <td className="border px-4 py-2 text-center">{moment(deleted_trade.deletion[0].deleted_at).fromNow()}</td>
+                                            <td className="border px-4 py-2 text-center">{deleted_trade.id}</td>
+                                            <td className="border px-4 py-2 text-center">{deleted_trade.buying_party}</td>
+                                            <td className="border px-4 py-2 text-center">{deleted_trade.selling_party}</td>
+                                            <td className="border px-4 py-2 text-center">{deleted_trade.product}</td>
+                                            <td className="border px-4 py-2 text-center">{deleted_trade.underlying_price}</td>
+                                            <td className="border px-4 py-2 text-center">{deleted_trade.quantity}</td>
+                                            <td className="border px-4 py-2 text-center">{deleted_trade.strike_price}</td>
+                                            <td className="border px-4 py-2 text-center">{deleted_trade.underlying_currency} | {deleted_trade.notional_currency}</td>
+                                            <td className="border px-4 py-2 text-center">{deleted_trade.maturity_date}</td>
+                                            <td className="border px-4 py-2 text-center">{moment(deleted_trade.date).fromNow()}</td>
+                                            <td className="border px-4 py-2 text-center">{moment(deleted_trade.deleted_at).fromNow()}</td>
                                         </tr>
                                     ))}
                                 </tbody>

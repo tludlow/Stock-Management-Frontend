@@ -84,14 +84,14 @@ export default function PDFDocument(props) {
                 <Text style={styles.padLeft}>Underlying Price: {trade.underlying_price}</Text>
                 <Text style={styles.padLeft}>Strike Price: {trade.strike_price}</Text>
                 <Text style={styles.padLeft}>Maturity Date: {trade.maturity_date}</Text>
-                <Text style={styles.padLeft}>Created: {moment(trade.created).fromNow()}</Text>
+                <Text style={styles.padLeft}>Created: {moment(trade.date).fromNow()}</Text>
             </View>
             
         );
     });
 
     var deleted_trades = props.data.deleted_trades.map(function(trade, idx){
-        return (<Text  key={idx}>• {trade.trade.id}</Text>);
+        return (<Text  key={idx}>• {trade.id}</Text>);
     });
 
     var edited_trades = props.data.edited_trades.map(function(trade, idx){

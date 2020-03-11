@@ -10,7 +10,7 @@ export default function TradingAll() {
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     let date = new Date()
 
-    const [page, setPage] = useState(1)
+    const [page, setPage] = useState(2)
     const [totalTrades, setTotalTrades] = useState(2)
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(true)

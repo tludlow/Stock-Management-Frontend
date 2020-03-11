@@ -49,6 +49,16 @@ export default function Corrections() {
 
     }
 
+    const ignoreError = (eid) => {
+        api.post("error/ignore", {"errorID": eid}).then(response => {
+            console.log(response);
+            window.location.reload();
+        }).catch(error => {
+            console.log(error)
+            setError("Error when ignoring error.")
+        })
+    }
+
     useEffect(()=> {
         api.get("/errorsandcorrections").then(response => {
             console.log(response);
@@ -86,14 +96,14 @@ export default function Corrections() {
                     <p className="ml-2">Uncorrected error in the trade</p>
                 </div>
                 <div className="flex">
-                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check-circle" className="text-green-700 mt-1 w-4 h-4 fill-current svg-inline--fa fa-check-circle fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"></path></svg>
+                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check-circle" className="text-green-700 mt-1 w-6 h-6 md:h-4 md:w-4 fill-current svg-inline--fa fa-check-circle fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"></path></svg>
                     <p className="ml-2">Corrected error in trade, either corrected by user or the system automatically</p>
                 </div>
             </div>
 
             <section className="mt-12">
                 {data.length === 0 && <p>No errors and corrections were found.</p> }
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     {data.map((trade, idx) => (
                         <div key={idx} className="p-4 bg-white rounded shadow flex">
                             <div className="">
@@ -103,7 +113,11 @@ export default function Corrections() {
                                 </div>
                                 <p className="text-xs md:text-sm">Errors: {trade.errors.length}</p>
                                 <p className="mb-2 text-xs md:text-sm">Corrections: {trade.correction_count}</p>
-                                <Link className="px-2 py-1 rounded bg-gray-500 text-white text-xs md:text-sm" to={`/trade/${trade.id}`}>View Trade</Link>
+                                <div className="flex flex-col w-9/12">
+                                    <Link className="px-2 py-1 rounded bg-gray-500 text-white text-center text-xs md:text-sm w-24" to={`/trade/${trade.id}`}>View Trade</Link>
+                                    <div className="mb-2"></div>
+                                    <Link className="text-white px-2 bg-green-700 rounded text-center" to={`/corrections/${trade.id}`}>Recommended Corrections</Link>
+                                </div>
                                 {/* <button className="mt-2 px-2 py-1 rounded bg-blue-600 text-white">Ignore errors</button> */}
                             </div>
 
@@ -120,7 +134,11 @@ export default function Corrections() {
                                                 }
                                             </div>
                                             <div className="ml-3">
-                                                <p className="font-semibold">({eidx + 1}) {prettyifyAttribute(error.erroneous_attribute)}</p>
+                                                <div className="flex">
+                                                    <p className="font-semibold">({eidx + 1}) {prettyifyAttribute(error.erroneous_attribute)}</p>
+                                                    <button onClick={()=> ignoreError(error.id)} className="px-2 py-1 text-white bg-red-500 rounded ml-3">Ignore</button>
+                                                </div>
+                                                
                                                 <p><span className="text-red-600">{error.erroneous_value}</span></p>
 
                                                 {error.correction === "null" ?
